@@ -1,3 +1,4 @@
+
 # my_tuple = (1,2,3,4,5)
 # print(my_tuple[1:4])
 
@@ -66,42 +67,60 @@
 # print(result)
 
 
-# numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-# even_numbers = []
+# 11번
+'''
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+even_numbers = []
 
-# for num in numbers:
-#     if num % 2 == 0:
-#         even_numbers.append(num)
+for num in numbers:
+    if num % 2 == 0:
+        even_numbers.append(num)
 
-# print(even_numbers)  # 출력: [2, 4, 6, 8, 10]
-
-
-# temp = float(input())
-
-# if temp >= 100:
-#     print("수증기")
-# elif 0<=temp<100:
-#     print("물")
-# else:
-#     print("얼음")
+print(even_numbers)  # 출력: [2, 4, 6, 8, 10]
+'''
 
 
+# 12번
+'''
+temp = float(input())
+
+if temp >= 100:
+    print("수증기")
+elif 0<=temp<100:
+    print("물")
+else:
+    print("얼음")
+'''
+
+
+# 13번
+'''
 # scores = {"국어": 85, "영어": 90, "수학": 78, "과학": 92}
 
 # scores1 = list(scores.values()) # 국영수과 점수를 리스트로 출력
 # print(f"평균은 {sum(scores1[0:4]) / 4}점 입니다.") # 86.25
+'''
 
 
+# 14번
+'''
 # text = input()
 # text1 = text.replace(" ", "").lower()
 # print(text1)
+'''
 
-# a = int(input())
-# sum = 0
 
-# for i in range(1, a + 1):  # 1부터 입력한 숫자 까지
-#     if i % 3 == 0:  # 3의 배수 이면
-#         print("제외합니다")
-#     elif i % 3 != 0:  # 3의 배수가 아니면
-#         sum += i  # 다 더해서
-#     print(sum)  # 출력
+# 15번
+'''
+a = int(input())
+sum = 0
+
+for i in range(1, a + 1):  # 1부터 입력한 숫자 까지
+    if i % 3 == 0:  # 3의 배수 이면
+        print("제외합니다")
+    elif i % 3 != 0:  # 3의 배수가 아니면
+        sum += i  # 다 더해서
+    print(sum)  # 출력
+'''
+
+
