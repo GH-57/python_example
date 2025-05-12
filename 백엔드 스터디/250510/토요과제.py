@@ -35,10 +35,16 @@ b = [3, 4, 5, 6, 7]
 c = list(set(a) & set(b))  # 셋으로 바꿔서 교집합 구한 후, 리스트로 전환
 print(c)
 """
+# 5번(모범답안)
+'''
+a, b = list(map(int, input().split())), list(map(int, input().split()))
+c = list(set(a) & set(b))
+print(f"교집합 : {c}")
+'''
 
 # 6번
-'''
+"""
 a = (1, [2, 3], 4)
 a[1][1] = 100
 print(a)
-'''
+"""

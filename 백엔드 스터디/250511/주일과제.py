@@ -37,6 +37,13 @@ my_list.sort(reverse=True)
 print(my_list)
 """
 
+# 4번 모범답안
+'''
+a = {"a": 3, "b": 1, "c": 2}
+b = sorted(a.items(), key=lambda x: x[1], reverse=True)
+print(b)
+'''
+
 # 5번
 '''
 for i in range(2, 10): # 2부터 9까지
