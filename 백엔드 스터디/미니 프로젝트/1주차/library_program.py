@@ -24,19 +24,18 @@ def menu():
     print("0. 로그아웃 또는 종료")
     print("=" * 40)
     
-    # 사용자의 메뉴 선택을 입력받음
-    try:
-        choice = int(input("원하는 메뉴를 선택하세요 (0-10): "))
-        # 메뉴 범위 확인 (0부터 10까지만 유효)
+    # 사용자의 메뉴 선택을 입력받음 (if문과 isdigit메서드 활용)
+    user_input = input("원하는 메뉴를 선택하세요 (0-10): ")
+    if user_input.isdigit():
+        choice = int(user_input)
         if 0 <= choice <= 10:
             return choice
         else:
             print("오류: 0부터 10까지의 숫자만 입력해주세요.")
-            return -1
-    except ValueError:
-        # 숫자가 아닌 값을 입력한 경우
-        print("오류: 숫자만 입력해주세요.")
         return -1
+    else:
+        print("오류: 숫자만 입력해주세요.")
+    return -1
 
 
 def main():
