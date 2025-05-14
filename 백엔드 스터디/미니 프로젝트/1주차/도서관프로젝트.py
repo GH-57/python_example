@@ -30,10 +30,10 @@ def menu():
             return choice
         else: # 그 이외의 숫자 골랐을 때
             print("오류: 0부터 10까지의 숫자만 입력해주세요.")
-        return 0 # -1은 아무 일도 일어나지 않게 하는 것
+        return 
     else: # 숫자 이외의 문자 골랐을 때
         print("오류: 숫자만 입력해주세요.")
-    return 0
+    return 
 
 
 
