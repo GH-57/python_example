@@ -32,10 +32,10 @@ def menu():
             return choice
         else:
             print("오류: 0부터 10까지의 숫자만 입력해주세요.")
-        return -1
+        return 0 # -1은 아무 일도 일어나지 않게 하는 것
     else:
         print("오류: 숫자만 입력해주세요.")
-    return -1
+    return 0
 
 
 def main():
