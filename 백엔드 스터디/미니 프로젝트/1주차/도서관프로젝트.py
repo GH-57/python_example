@@ -133,7 +133,7 @@ class LibrarySystem:
         # user_books = [(i, b) for i, b in enumerate(self.books) if b["rented_by"] == self.current_user]
         user_books = []
         # 책 리스트(self.books)의 각 책을 인덱스와 함께 확인
-        for i, b in enumerate(self.books):
+        for i, book in enumerate(self.books):
             # 책의 대여자가 현재 사용자인지 확인
             if book["rented_by"] == self.current_user:
                 # 대여자가 현재 사용자라면, 해당 책의 인덱스와 책 정보를 리스트에 추가
@@ -166,7 +166,7 @@ class LibrarySystem:
         # user_books = [(i, b) for i, b in enumerate(self.books) if b["rented_by"] == self.current_user]
         user_books = []
         # 책 리스트(self.books)의 각 책을 인덱스와 함께 확인
-        for i, b in enumerate(self.books):
+        for i, book in enumerate(self.books):
             # 책의 대여자가 현재 사용자인지 확인
             if book["rented_by"] == self.current_user:
                 # 대여자가 현재 사용자라면, 해당 책의 인덱스와 책 정보를 리스트에 추가
