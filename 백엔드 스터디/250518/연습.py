@@ -128,7 +128,7 @@ class Pet:
         elif self.happiness >= 20:
             mood = "지루함"
         else:
-            mood = 슬픔
+            mood = "슬픔"
 
         if self.hunger >= 80:
             hunger_status = "매우 배고픔"
