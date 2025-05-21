@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박스 모델</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .box {
+            background-color: pink;
+            width: auto;
+            height: auto;
+            width: 500px;
+            height: 500px;
+            padding: 30px 20px 10px 5px;
+            /* 시계방향으로 작성한다 */
+            /* padding: 10px; 모든 방향에 동일한 패딩 */
+            padding: 10px 20px;
+            /* 상하 10px, 좌우 20px */
+            /* margin: 50px; */
+            /* 블록 요소 내부의 인라인 요소만 가운데 정렬 */
+            text-align: center;
+            border-top: 2px dashed red;
+            border-right: 3px dotted green;
+            border-bottom: 4px double blue;
+            border-left: 5px groove yellow;
+            border: 3px solid gray;
+            border-radius: 8px;
+            border-radius: 10px;
+            border-radius: 50%; /* 원형이 된다*/
+
+        }
+        .center {
+            /* margin: auto; */
+            /* CSS에서 요소를 가운데 정렬하는 가장 일반적인 방법*/
+            /* 브라우저가 사용 가능한 공간을 계산, 그 계산된 값을 좌우 자동으로 균등하게 분배한다. */
+            margin-left: auto;
+            /* 가용 가능한 공간을 모두 왼쪽에 부여, = 오른쪽 정렬 */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti consequuntur optio quo maxime, dolorum, laboriosam nostrum facilis, minus autem id sapiente corporis ipsam rerum odit voluptate quae ad! Ullam, alias?</div>
+
+    <div class="box center">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Corrupti consequuntur optio quo maxime, dolorum, laboriosam nostrum facilis, minus autem id sapiente corporis ipsam rerum odit voluptate quae ad! Ullam, alias?</div>
+</body>
+</html>

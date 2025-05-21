@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선택자 우선순위</title>
+     <style>
+        #yello {
+            color: yellow;
+            /* 100점 선택자 */
+        }
+
+        p{
+        color: red;
+        /* 1점 선택자 */
+        }
+        p {
+            color: blue;
+            /* 1점 선택자 */
+        }
+        .container p {
+            color: orange;
+            /* 11점 선택자 = 10점 + 1점 */
+        }
+        div p {
+            color: pink;
+            /* 2점 선택자 = div1점 + p 1점 */
+        }
+        p {
+            color: green;
+        }
+        .yello-class {
+            color: yellowgreen;
+            /* 10점 선택자 */
+        }
+     </style>
+</head>
+<body>
+    <p>안녕</p>
+    <p>안녕하세요</p>
+    <p class="yello-class" id="yello">해당 p태그는 id 선택자로 선택된 태그입니다.</p>
+    <p style="color: red;">안녕하세요~</p>
+    <div class="container">
+        <p style="color: darkgreen;">저는 중첩된 p태그 입니다.</p></div>
+        <!-- 인라인 스타일은 1000점이기 때문에 해달 스타일로 적용. -->
+</body>
+</html>
