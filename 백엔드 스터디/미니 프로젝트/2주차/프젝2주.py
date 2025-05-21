@@ -30,6 +30,7 @@ class HistoryManager:
 
 
     def _load_history(self):
+        pass
         # 거래내역 파일 로드
 
 
