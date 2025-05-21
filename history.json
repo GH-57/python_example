@@ -1,0 +1,44 @@
+{
+    "1001": [
+        {
+            "date": "2025-05-21 18:06:25",
+            "type": "deposit",
+            "amount": 500000,
+            "description": "월급"
+        },
+        {
+            "date": "2025-05-21 18:06:25",
+            "type": "withdraw",
+            "amount": 50000,
+            "description": "ATM 출금"
+        },
+        {
+            "date": "2025-05-21 18:06:25",
+            "type": "transfer_out",
+            "amount": 100000,
+            "description": "친구에게 송금",
+            "related_account": "1002"
+        },
+        {
+            "date": "2025-05-21 18:06:25",
+            "type": "deposit",
+            "amount": 20000,
+            "description": "환불"
+        },
+        {
+            "date": "2025-05-11 18:06:25",
+            "type": "deposit",
+            "amount": 300000,
+            "description": "보너스"
+        }
+    ],
+    "1002": [
+        {
+            "date": "2025-05-21 18:06:25",
+            "type": "transfer_in",
+            "amount": 100000,
+            "description": "친구에게서 받음",
+            "related_account": "1001"
+        }
+    ]
+}
