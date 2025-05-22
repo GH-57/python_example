@@ -1,7 +1,7 @@
 import json # json파일 읽기 및 쓰기
-import os # 파일 존재 여부 확인
-from datetime import datetime, timedelta # 날짜 비교 및 처리
-
+import os # 파일 존재 여부 확인 # 날짜 비교 및 처리
+import csv
+from datetime import datetime, timedelta
 
 class HistoryManager:
     '''
@@ -14,13 +14,13 @@ class HistoryManager:
     
     def __init__(self):
         # 거래내역 파일 경로 설정
-        self.history_file = "history_file"
-        self.export_file = "export_history.json"
+        self.history_file = "history.json"
+        self.export_file = "export_history.csv"
         
         # 파일이 없을 경우 빈 JSON 파일 생성
         if not os.path.exists(self.history_file): # file이 없다면..
             with open(self.history_file, 'w') as f:
-                json.dump({}, f)
+                json.dump([], f)
 
 
     def get_all_history(self, account_no):
@@ -54,14 +54,14 @@ class HistoryManager:
             reverse=True
         )
         # count 개만 반환
-        return sorted_history[::count]
+        return sorted_history[:count]
 
 
-    def serch_by_date(self, account_no, start_date, end_date):
+    def search_by_date(self, account_no, start_date, end_date):
         '''날짜 범위로 거래내역 검색'''
         try:
             # 날짜 형식 변환
-            start = datetime.strftime(start_date, "%Y-%m-%d")
+            start = datetime.strptime(start_date, "%Y-%m-%d")
             end = datetime.strptime(end_date, "%Y-%m-%d")
 
             # 모든 내역 가져오기
