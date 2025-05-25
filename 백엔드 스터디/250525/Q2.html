@@ -42,6 +42,10 @@
 
         /* 여기에 CSS를 작성하세요! */
         .nav-menu {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
             /* 목표:
                - 리스트를 가로로 배치
                - 기본 리스트 스타일 제거
@@ -50,6 +54,8 @@
         }
 
         .nav-menu li {
+            margin-right: 20px;
+
             /* 목표:
                - 리스트 아이템을 가로로 배치
                - 리스트 점(bullet) 제거
@@ -57,6 +63,11 @@
         }
 
         .nav-menu a {
+            text-decoration: none;
+            padding: 10px 15px;
+            color: #333;
+            border-radius: 4px;
+            transition: all 0.3s ease;
             /* 목표:
                - 링크 밑줄 제거
                - 적절한 padding 추가
@@ -66,6 +77,8 @@
         }
 
         .nav-menu a:hover {
+            background-color: #007acc;
+            color: white;
             /* 마우스 호버 시 효과 */
         }
     </style>
