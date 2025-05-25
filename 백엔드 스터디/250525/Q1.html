@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제 1 - 기본 박스 스타일링</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+
+        .task {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #007acc;
+            border-radius: 4px;
+        }
+
+        .hint {
+            margin-top: 30px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        /* 여기에 CSS를 작성하세요! */
+        .box1 {
+            /* 목표:
+               - 빨간색 배경 (background-color: red;)
+               - 가로 200px, 세로 100px (width, height)
+               - 흰색 텍스트 (color: white;)
+               - 텍스트를 박스 중앙에 배치 (text-align, line-height 또는 flexbox 사용)
+            */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 문제 1: 기본 박스 스타일링</h1>
+        <div class="task">
+            <strong>목표:</strong> 아래 박스를 빨간색 배경에 흰색 텍스트로 만들고, 크기를 가로 200px, 세로 100px로 설정하세요. 텍스트는 박스 중앙에 위치시키세요.
+        </div>
+    </div>
+
+    <div class="box1">Hello World!</div>
+
+    <div class="hint">
+        <h3>💡 힌트</h3>
+        <ul>
+            <li><code>background-color: red;</code> - 빨간색 배경</li>
+            <li><code>width: 200px; height: 100px;</code> - 크기 설정</li>
+            <li><code>color: white;</code> - 흰색 텍스트</li>
+            <li><code>text-align: center;</code> - 가로 중앙 정렬</li>
+            <li><code>line-height: 100px;</code> - 세로 중앙 정렬 (높이와 같게)</li>
+        </ul>
+        <p><strong>또는 Flexbox 사용:</strong></p>
+        <ul>
+            <li><code>display: flex;</code></li>
+            <li><code>justify-content: center;</code> - 가로 중앙</li>
+            <li><code>align-items: center;</code> - 세로 중앙</li>
+        </ul>
+    </div>
+</body>
+</html>

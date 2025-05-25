@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제 3 - 카드 컴포넌트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+
+        .task {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #007acc;
+            border-radius: 4px;
+        }
+
+        .hint {
+            margin-top: 30px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .challenge {
+            margin-top: 30px;
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        /* 여기에 CSS를 작성하세요! */
+        .card {
+            /* 목표:
+               - 카드처럼 보이는 박스 만들기
+               - 그림자 효과 추가
+               - 적절한 패딩과 마진
+               - 둥근 모서리
+               - 배경색을 흰색으로
+            */
+        }
+
+        .card:hover {
+            /* 목표:
+               - 마우스 호버 시 카드가 살짝 위로 올라가는 효과
+               - 그림자를 더 진하게
+               - 부드러운 애니메이션 효과
+            */
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎴 문제 3: 카드 컴포넌트</h1>
+        <div class="task">
+            <strong>목표:</strong> 아래 div를 카드처럼 보이게 스타일링하고, 마우스 호버 시 살짝 위로 올라가는 효과를 추가하세요. 현대적인 UI 카드를 만들어보세요!
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>멋진 카드 제목</h3>
+        <p>이것은 카드 컴포넌트입니다. 마우스를 올려보세요! 부드럽게 위로 올라가면서 그림자가 더 진해질 거예요.</p>
+        <p>카드는 현대 웹 디자인에서 자주 사용되는 UI 요소입니다.</p>
+    </div>
+
+    <div class="hint">
+        <h3>💡 힌트</h3>
+        <p><strong>기본 카드 스타일:</strong></p>
+        <ul>
+            <li><code>background-color: white;</code> - 흰색 배경</li>
+            <li><code>padding: 20px;</code> - 내부 여백</li>
+            <li><code>border-radius: 8px;</code> - 둥근 모서리</li>
+            <li><code>box-shadow: 0 2px 8px rgba(0,0,0,0.1);</code> - 그림자</li>
+            <li><code>max-width: 400px;</code> - 최대 너비 제한</li>
+            <li><code>transition: all 0.3s ease;</code> - 부드러운 애니메이션</li>
+        </ul>
+        <p><strong>호버 효과:</strong></p>
+        <ul>
+            <li><code>transform: translateY(-5px);</code> - 위로 5px 이동</li>
+            <li><code>box-shadow: 0 8px 25px rgba(0,0,0,0.15);</code> - 더 큰 그림자</li>
+        </ul>
+    </div>
+
+    <div class="challenge">
+        <h3>🚀 도전 과제</h3>
+        <p>기본 문제를 완료했다면:</p>
+        <ul>
+            <li>카드에 <strong>border</strong>를 추가해보세요</li>
+            <li><strong>hover 시 배경색</strong>이 살짝 바뀌게 해보세요</li>
+            <li>카드 내부의 <strong>제목 색상</strong>도 hover 시 변경해보세요</li>
+            <li><strong>cursor: pointer;</strong>를 추가해서 클릭 가능해 보이게 만들어보세요</li>
+        </ul>
+    </div>
+</body>
+</html>

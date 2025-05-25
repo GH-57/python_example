@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문제 2 - 네비게이션 메뉴</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            margin: 0 0 10px 0;
+        }
+
+        .task {
+            background: #e8f4f8;
+            padding: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #007acc;
+            border-radius: 4px;
+        }
+
+        .hint {
+            margin-top: 30px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        /* 여기에 CSS를 작성하세요! */
+        .nav-menu {
+            /* 목표:
+               - 리스트를 가로로 배치
+               - 기본 리스트 스타일 제거
+               - 적절한 여백 설정
+            */
+        }
+
+        .nav-menu li {
+            /* 목표:
+               - 리스트 아이템을 가로로 배치
+               - 리스트 점(bullet) 제거
+            */
+        }
+
+        .nav-menu a {
+            /* 목표:
+               - 링크 밑줄 제거
+               - 적절한 padding 추가
+               - 색상 설정
+               - 호버 효과 추가
+            */
+        }
+
+        .nav-menu a:hover {
+            /* 마우스 호버 시 효과 */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧭 문제 2: 네비게이션 메뉴</h1>
+        <div class="task">
+            <strong>목표:</strong> 아래 리스트를 가로로 배치하고, 각 메뉴 항목에 padding과 hover 효과를 추가하세요. 깔끔한 네비게이션 메뉴를 만들어보세요!
+        </div>
+    </div>
+
+    <ul class="nav-menu">
+        <li><a href="#">홈</a></li>
+        <li><a href="#">소개</a></li>
+        <li><a href="#">서비스</a></li>
+        <li><a href="#">연락처</a></li>
+    </ul>
+
+    <div class="hint">
+        <h3>💡 힌트</h3>
+        <p><strong>nav-menu (ul 요소):</strong></p>
+        <ul>
+            <li><code>display: flex;</code> - 가로 배치 (또는 display: inline-block을 li에 사용)</li>
+            <li><code>list-style: none;</code> - 리스트 점 제거</li>
+            <li><code>padding: 0; margin: 0;</code> - 기본 여백 제거</li>
+        </ul>
+        <p><strong>nav-menu li:</strong></p>
+        <ul>
+            <li><code>margin-right: 20px;</code> - 메뉴 간격</li>
+        </ul>
+        <p><strong>nav-menu a:</strong></p>
+        <ul>
+            <li><code>text-decoration: none;</code> - 밑줄 제거</li>
+            <li><code>padding: 10px 15px;</code> - 클릭 영역 확대</li>
+            <li><code>color: #333;</code> - 텍스트 색상</li>
+            <li><code>border-radius: 4px;</code> - 둥근 모서리</li>
+        </ul>
+        <p><strong>hover 효과:</strong></p>
+        <ul>
+            <li><code>background-color: #007acc;</code></li>
+            <li><code>color: white;</code></li>
+        </ul>
+    </div>
+</body>
+</html>
