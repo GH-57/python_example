@@ -50,6 +50,14 @@
 
         /* 여기에 CSS를 작성하세요! */
         .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 400px;
+            box-shadow: 0.2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+
             /* 목표:
                - 카드처럼 보이는 박스 만들기
                - 그림자 효과 추가
@@ -60,11 +68,18 @@
         }
 
         .card:hover {
+            transform: translate(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            background-color: #f8f9f8;
             /* 목표:
                - 마우스 호버 시 카드가 살짝 위로 올라가는 효과
                - 그림자를 더 진하게
                - 부드러운 애니메이션 효과
             */
+        }
+
+        .card:hover h3 {
+            color: #007acc;
         }
 
         .card h3 {
