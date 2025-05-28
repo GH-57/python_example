@@ -15,32 +15,44 @@
 // console.log("world");
 
 // *js의 비동기 처리 방식
-setTimeout(() => {   
-    console.log("hello");
-}, 0);
+// setTimeout(() => {   
+//     console.log("hello");
+// }, 0);
 
-console.log("world"); 
+// console.log("world"); 
 
 
 // *콜 스텍 처리 과정 (함수의 호출과 관련 => '후입선출')
 // 콜스택은 작업을 '동기적'으로 처리한다!
-const 참깨빵 = () => {
-    console.log("Call 참깨빵");
-    순쇠고기패티();
-    console.log("End 참깨빵");
-};
+// const 참깨빵 = () => {
+//     console.log("Call 참깨빵");
+//     순쇠고기패티();
+//     console.log("End 참깨빵");
+// };
 
-const 순쇠고기패티 = () => {
-    console.log("Call 순쇠고기패티");
-    특별한소스();
-    console.log("End 순쇠고기패티");
-};
+// const 순쇠고기패티 = () => {
+//     console.log("Call 순쇠고기패티");
+//     특별한소스();
+//     console.log("End 순쇠고기패티");
+// };
 
-const 특별한소스 = () => {
-    console.log("Call 특별한소스");
-    console.log("End 특별한소스");
-};
+// const 특별한소스 = () => {
+//     console.log("Call 특별한소스");
+//     console.log("End 특별한소스");
+// };
 
 // 참깨빵();
 // console.log("---함수 호출 종료----");
 
+
+
+// *비동기 제어
+const user = {};
+
+setTimeout(() => {
+    user.name = "weniv";
+}, 0);
+
+console.log(user);
+
+// 콜백함수
