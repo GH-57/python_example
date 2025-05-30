@@ -65,7 +65,7 @@ def notice():
 
 @app.get("/index", response_class=HTMLResponse)  # HTML 형태 (JSON형태 X)
 def index():
-    return "<h1> 너무 더워어어어어어어 하겐다즈 줘어어 </h1>"
+    return "<h1> 너무 더워어어어어어 하겐다즈 줘어어 </h1>"
 
 @app.get("/index2") # ->127.0.0.1:8000/index2 get method
 def index2(request:Request):
