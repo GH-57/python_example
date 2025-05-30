@@ -1,0 +1,241 @@
+<!DOCTYPE html> 
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>그책사 벌금 계산기 (수정본)</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Malgun Gothic', sans-serif;
+      background: linear-gradient(to bottom, #eef2ff, #ffffff);
+      padding: 30px;
+      max-width: 900px;
+      margin: auto;
+    }
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    h1 { text-align: center; color: #333; margin-bottom: 20px; }
+    .selector {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+    select, button {
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .person-card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: #f9f9ff;
+    }
+    .checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .fine-amount {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    #accumulated-fines {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+      color: #555;
+      white-space: pre-line; /* 줄바꿈 반영 */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📚 그책사 벌금 계산기</h1>
+    <div class="selector">
+      <select id="week-select" onchange="changeWeekOrDay()">
+        <option value="1">1주차</option>
+        <option value="2">2주차</option>
+        <option value="3">3주차</option>
+        <option value="4">4주차</option>
+        <option value="5">5주차</option>
+        <option value="6">6주차</option>
+        <option value="7">7주차</option>
+        <option value="8">8주차</option>
+        <option value="9">9주차</option>
+      </select>
+      <select id="day-select" onchange="changeWeekOrDay()">
+        <option value="0">월</option>
+        <option value="1">화</option>
+        <option value="2">수</option>
+        <option value="3">목</option>
+        <option value="4">금</option>
+        <option value="5">토</option>
+      </select>
+      <button onclick="saveDataToFirebase()">💾 저장</button>
+    </div>
+
+    <!-- 누적 벌금 표시 -->
+    <div id="accumulated-fines">
+      누적 벌금: -
+    </div>
+
+    <div id="people-container"></div>
+  </div>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDTAD9cvkVmtiRj_yFj39x0D2Zjcb6CYZU",
+      authDomain: "thebookpeople.firebaseapp.com",
+      projectId: "thebookpeople"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    const people = ['윤희준', '김하솜', '김의진', '김희경', '금예은', '배근호', '송지혜', '임건'];
+    let currentWeek = 1;
+    let currentDay = 0;
+    let dailyData = {};
+
+    function initializeDailyData() {
+      for (let week = 1; week <= 9; week++) {
+        dailyData[week] = {};
+        for (let day = 0; day < 6; day++) {
+          dailyData[week][day] = {};
+          people.forEach((_, i) => {
+            dailyData[week][day][i] = { task1: false, task2: false, task3: false };
+          });
+        }
+      }
+    }
+
+    function initializePeople() {
+      const container = document.getElementById('people-container');
+      container.innerHTML = '';
+      people.forEach((name, i) => {
+        const div = document.createElement('div');
+        div.className = 'person-card';
+        div.innerHTML = `
+          <div><strong>${name}</strong></div>
+          <div class="checkboxes">
+            <label><input type="checkbox" id="task1_${i}" onchange="saveAndRecalc(${i})"> 본문묵상</label>
+            <label><input type="checkbox" id="task2_${i}" onchange="saveAndRecalc(${i})"> 통독</label>
+            <label><input type="checkbox" id="task3_${i}" onchange="saveAndRecalc(${i})"> 교리문답</label>
+          </div>
+          <div class="fine-amount" id="fine_${i}">벌금: 0원</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function saveAndRecalc(i) {
+      const data = dailyData[currentWeek][currentDay][i] = {
+        task1: document.getElementById(`task1_${i}`).checked,
+        task2: document.getElementById(`task2_${i}`).checked,
+        task3: document.getElementById(`task3_${i}`).checked
+      };
+      const missed = [data.task1, data.task2, data.task3].filter(x => !x).length;
+      const fine = missed === 1 ? 0 : missed === 2 ? 500 : missed === 3 ? 1000 : 0;
+      document.getElementById(`fine_${i}`).textContent = `벌금: ${fine.toLocaleString()}원`;
+
+      updateAccumulatedFines();
+    }
+
+    function changeWeekOrDay() {
+      currentWeek = parseInt(document.getElementById('week-select').value);
+      currentDay = parseInt(document.getElementById('day-select').value);
+      people.forEach((_, i) => {
+        const data = dailyData[currentWeek][currentDay][i];
+        document.getElementById(`task1_${i}`).checked = data.task1;
+        document.getElementById(`task2_${i}`).checked = data.task2;
+        document.getElementById(`task3_${i}`).checked = data.task3;
+        saveAndRecalc(i);
+      });
+
+      updateAccumulatedFines();
+    }
+
+    function saveDataToFirebase() {
+      db.collection('벌금데이터').doc('dailyData').set(dailyData)
+        .then(() => alert('저장 완료'))
+        .catch(err => alert('저장 실패: ' + err.message));
+    }
+
+    function loadDataFromFirebase() {
+      db.collection('벌금데이터').doc('dailyData').get()
+        .then(doc => {
+          if (doc.exists) {
+            dailyData = doc.data();
+          } else {
+            initializeDailyData();
+          }
+          initializePeople();
+          changeWeekOrDay();
+        })
+        .catch(() => {
+          initializeDailyData();
+          initializePeople();
+          changeWeekOrDay();
+        });
+    }
+
+    function calculateAccumulatedFines(week) {
+      const daysCount = 6;
+
+      const today = new Date();
+      let currentRealDay = today.getDay() - 1; // 월=0, ..., 토=5
+      if (currentRealDay < 0) currentRealDay = 0; // 일요일이면 0으로 맞춤
+
+      const currentRealWeek = week; // 기준은 선택한 주차(필요하면 오늘 날짜 기준으로 바꾸는 것도 가능)
+
+      const accumulatedFines = [];
+
+      for (let i = 0; i < people.length; i++) {
+        let totalFine = 0;
+        for (let day = 0; day < daysCount; day++) {
+          // 오늘 기준으로 아직 안온 요일은 누적 벌금 계산에서 제외
+          if (week === currentRealWeek && day > currentRealDay) continue;
+
+          const data = dailyData[week][day][i];
+          if (!data) continue;
+
+          const missed = [data.task1, data.task2, data.task3].filter(x => !x).length;
+          const fine = missed === 1 ? 0 : missed === 2 ? 500 : missed === 3 ? 1000 : 0;
+          totalFine += fine;
+        }
+        accumulatedFines[i] = totalFine;
+      }
+
+      return accumulatedFines;
+    }
+
+    function updateAccumulatedFines() {
+      const fines = calculateAccumulatedFines(currentWeek);
+      const container = document.getElementById('accumulated-fines');
+
+      let text = '누적 벌금:\n';
+      people.forEach((name, i) => {
+        text += `${name}: ${fines[i].toLocaleString()}원\n`;
+      });
+
+      container.textContent = text;
+    }
+
+    window.onload = function() {
+      initializeDailyData();
+      loadDataFromFirebase();
+    };
+  </script>
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>그책사 벌금 계산기 (개선판)</title>
+  <title>그책사 벌금 계산기 (수정본)</title>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -146,8 +146,10 @@
         task3: document.getElementById(`task3_${i}`).checked
       };
       const missed = [data.task1, data.task2, data.task3].filter(x => !x).length;
-      const fine = missed === 2 ? 500 : missed === 3 ? 1000 : 0;
+      const fine = missed === 1 ? 0 : missed === 2 ? 500 : missed === 3 ? 1000 : 0;
       document.getElementById(`fine_${i}`).textContent = `벌금: ${fine.toLocaleString()}원`;
+
+      updateAccumulatedFines();
     }
 
     function changeWeekOrDay() {
@@ -190,16 +192,26 @@
 
     function calculateAccumulatedFines(week) {
       const daysCount = 6;
+
+      const today = new Date();
+      let currentRealDay = today.getDay() - 1; // 월=0, ..., 토=5
+      if (currentRealDay < 0) currentRealDay = 0; // 일요일이면 0으로 맞춤
+
+      const currentRealWeek = week; // 기준은 선택한 주차(필요하면 오늘 날짜 기준으로 바꾸는 것도 가능)
+
       const accumulatedFines = [];
 
       for (let i = 0; i < people.length; i++) {
         let totalFine = 0;
         for (let day = 0; day < daysCount; day++) {
+          // 오늘 기준으로 아직 안온 요일은 누적 벌금 계산에서 제외
+          if (week === currentRealWeek && day > currentRealDay) continue;
+
           const data = dailyData[week][day][i];
           if (!data) continue;
 
           const missed = [data.task1, data.task2, data.task3].filter(x => !x).length;
-          const fine = missed === 2 ? 500 : missed === 3 ? 1000 : 0;
+          const fine = missed === 1 ? 0 : missed === 2 ? 500 : missed === 3 ? 1000 : 0;
           totalFine += fine;
         }
         accumulatedFines[i] = totalFine;
