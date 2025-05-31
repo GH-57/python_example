@@ -30,4 +30,5 @@ def ngame():
         except ValueError:
             print("올바른 숫자를 입력하세요!")
 
+
 ngame()
