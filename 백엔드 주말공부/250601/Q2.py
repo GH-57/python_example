@@ -10,6 +10,9 @@ def reverwords(text):
     reverwords = [word[::-1] for word in words]
     return ' '.join(reverwords)
 
+
+
+
 print("문제 2 결과:")
 test_text = "hello Word"
 result = reverwords(test_text)
