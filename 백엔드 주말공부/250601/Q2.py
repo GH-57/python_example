@@ -12,7 +12,6 @@ def reverwords(text):
 
 
 
-
 print("문제 2 결과:")
 test_text = "hello Word"
 result = reverwords(test_text)
