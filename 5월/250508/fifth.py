@@ -16,6 +16,7 @@ numbers = (3, 1, 4, 1, 5, 9, 2, 6, 5, 3)
 print(numbers.count(5))  # 2
 print(numbers.index(5))  # 4 제일 처음에 있는 인덱스를 찾음.
 
+
 bc = (1,[12,3,4])
 bc[1][0] = "good"
 print(bc[1])
