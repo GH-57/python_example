@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>할 일 통계 - 할 일 관리</title>
+    <link rel="stylesheet" href="/주말공부/공휴일250603/templates/static.style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📈 할 일 통계</h1>
+            <a href="/" class="back-link">← 메인으로 돌아가기</a>
+        </header>
+
+        <!-- 전체 통계 -->
+        <div class="stats-section">
+            <h2>📊 전체 현황</h2>
+            <div class="stats-grid">
+                <div class="stat-item large">
+                    <span class="stat-number">{{ total_todos }}</span>
+                    <span class="stat-label">총 할 일</span>
+                </div>
+                <div class="stat-item large">
+                    <span class="stat-number">{{ completed_todos }}</span>
+                    <span class="stat-label">완료된 할 일</span>
+                </div>
+                <div class="stat-item large">
+                    <span class="stat-number">{{ pending_todos }}</span>
+                    <span class="stat-label">남은 할 일</span>
+                </div>
+                <div class="stat-item large">
+                    <span class="stat-number">{{ completion_rate }}%</span>
+                    <span class="stat-label">완료율</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 우선순위별 통계 -->
+        <div class="stats-section">
+            <h2>🎯 우선순위별 통계</h2>
+            <div class="priority-stats">
+                {% for priority, total in priority_stats.items() %}
+                <div class="priority-stat-item">
+                    <div class="priority-header">
+                        <span class="priority-label priority-{{ priority }}">
+                            {% if priority == "높음" %}🔴{% elif priority == "보통" %}🟡{% else %}🟢{% endif %}
+                            {{ priority }} 우선순위
+                        </span>
+                    </div>
+                    <div class="priority-numbers">
+                        <div class="priority-number">
+                            <span class="number">{{ total }}</span>
+                            <span class="label">전체</span>
+                        </div>
+                        <div class="priority-number">
+                            <span class="number">{{ completed_by_priority[priority] }}</span>
+                            <span class="label">완료</span>
+                        </div>
+                        <div class="priority-number">
+                            <span class="number">{{ total - completed_by_priority[priority] }}</span>
+                            <span class="label">미완료</span>
+                        </div>
+                    </div>
+                    {% if total > 0 %}
+                    <div class="progress-bar">
+                        <div class="progress-fill" 
+                             style="width: {{ (completed_by_priority[priority] / total * 100) }}%"></div>
+                    </div>
+                    <div class="progress-text">
+                        {{ "%.1f"|format(completed_by_priority[priority] / total * 100) }}% 완료
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- 진행률 시각화 -->
+        {% if total_todos > 0 %}
+        <div class="stats-section">
+            <h2>📊 전체 진행률</h2>
+            <div class="overall-progress">
+                <div class="progress-circle">
+                    <div class="progress-text-large">
+                        <span class="progress-percentage">{{ completion_rate }}%</span>
+                        <span class="progress-label">완료</span>
+                    </div>
+                </div>
+                <div class="progress-details">
+                    <div class="progress-item">
+                        <div class="progress-color completed"></div>
+                        <span>완료: {{ completed_todos }}개</span>
+                    </div>
+                    <div class="progress-item">
+                        <div class="progress-color pending"></div>
+                        <span>미완료: {{ pending_todos }}개</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- 추가 정보 -->
+        {% if total_todos > 0 %}
+        <div class="stats-section">
+            <h2>💡 분석 결과</h2>
+            <div class="analysis">
+                {% if completion_rate >= 80 %}
+                <div class="analysis-item positive">
+                    <span class="analysis-icon">🎉</span>
+                    <span class="analysis-text">훌륭합니다! 대부분의 할 일을 완료하셨네요.</span>
+                </div>
+                {% elif completion_rate >= 50 %}
+                <div class="analysis-item neutral">
+                    <span class="analysis-icon">👍</span>
+                    <span class="analysis-text">좋은 진전이 있습니다. 조금만 더 힘내세요!</span>
+                </div>
+                {% else %}
+                <div class="analysis-item warning">
+                    <span class="analysis-icon">💪</span>
+                    <span class="analysis-text">아직 해야 할 일이 많네요. 하나씩 차근차근 해보세요!</span>
+                </div>
+                {% endif %}
+
+                {% if priority_stats["높음"] > completed_by_priority["높음"] %}
+                <div class="analysis-item warning">
+                    <span class="analysis-icon">🔥</span>
+                    <span class="analysis-text">높은 우선순위 할 일이 {{ priority_stats["높음"] - completed_by_priority["높음"] }}개 남아있습니다.</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="navigation">
+            <a href="/" class="nav-button">📝 할 일 목록으로</a>
+        </div>
+    </div>
+</body>
+</html>

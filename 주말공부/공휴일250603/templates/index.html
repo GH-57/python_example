@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>할 일 관리</title>
+    <link rel="stylesheet" href="/주말공부/공휴일250603/templates/static.style.css"
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 할 일 관리</h1>
+        </header>
+
+        <!-- 통계 정보 섹션 -->
+        <div class="stats-section">
+            <h2>📊 할 일 통계</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">{{ total_todos }}</span>
+                    <span class="stat-label">전체</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ completed_todos }}</span>
+                    <span class="stat-label">완료</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ pending_todos }}</span>
+                    <span class="stat-label">미완료</span>
+                </div>
+            </div>
+            <div class="stats-link">
+                <a href="/stats">📈 자세한 통계 보기</a>
+            </div>
+        </div>
+
+        <!-- 에러 메시지 표시 -->
+        {% if error_message %}
+        <div class="error-message">
+            ⚠️ {{ error_message }}
+        </div>
+        {% endif %}
+
+        <!-- 할 일 추가 폼 -->
+        <div class="add-form-section">
+            <h2>➕ 새 할 일 추가</h2>
+            <form action="/add" method="post" class="add-form">
+                <div class="form-group">
+                    <label for="title">할 일 제목 *</label>
+                    <input type="text" id="title" name="title" required maxlength="100" 
+                           placeholder="해야 할 일을 입력하세요">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">상세 설명</label>
+                    <textarea id="description" name="description" maxlength="500" rows="3"
+                              placeholder="추가 설명을 입력하세요 (선택사항)"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="priority">우선순위 *</label>
+                    <select id="priority" name="priority" required>
+                        <option value="높음">🔴 높음</option>
+                        <option value="보통" selected>🟡 보통</option>
+                        <option value="낮음">🟢 낮음</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="submit-btn">할 일 추가</button>
+            </form>
+        </div>
+
+        <!-- 할 일 목록 -->
+        <div class="todo-list-section">
+            <h2>📋 할 일 목록</h2>
+            
+            {% if todos %}
+                <div class="todo-list">
+                    {% for todo in todos %}
+                    <div class="todo-item {% if todo.completed %}completed{% endif %}">
+                        <div class="todo-content">
+                            <div class="todo-header">
+                                <h3 class="todo-title">{{ todo.title }}</h3>
+                                <span class="priority priority-{{ todo.priority }}">
+                                    {% if todo.priority == "높음" %}🔴{% elif todo.priority == "보통" %}🟡{% else %}🟢{% endif %}
+                                    {{ todo.priority }}
+                                </span>
+                            </div>
+                            
+                            {% if todo.description %}
+                            <p class="todo-description">{{ todo.description }}</p>
+                            {% endif %}
+                            
+                            <div class="todo-meta">
+                                <span class="created-at">📅 {{ todo.created_at }}</span>
+                                {% if todo.completed %}
+                                <span class="completed-badge">✅ 완료됨</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="todo-actions">
+                            <form action="/toggle/{{ todo.id }}" method="post" style="display: inline;">
+                                <button type="submit" class="toggle-btn {% if todo.completed %}uncomplete{% else %}complete{% endif %}">
+                                    {% if todo.completed %}
+                                        ↩️ 미완료로
+                                    {% else %}
+                                        ✅ 완료
+                                    {% endif %}
+                                </button>
+                            </form>
+                            
+                            <form action="/delete/{{ todo.id }}" method="post" style="display: inline;"
+                                  onsubmit="return confirm('정말 삭제하시겠습니까?')">
+                                <button type="submit" class="delete-btn">🗑️ 삭제</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-todos">
+                    <div class="no-todos-icon">📝</div>
+                    <h3>아직 등록된 할 일이 없습니다</h3>
+                    <p>첫 번째 할 일을 추가해보세요!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
