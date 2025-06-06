@@ -9,4 +9,6 @@ URL에서 name 값을 받아서 {"message": "Hello, {name}!"} 형태로 응답
 힌트: 함수 매개변수에 경로 변수를 받으면 됩니다.
 '''
 
+from fastapi import FastAPI
+
 
