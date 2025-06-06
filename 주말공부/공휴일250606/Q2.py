@@ -11,4 +11,8 @@ URL에서 name 값을 받아서 {"message": "Hello, {name}!"} 형태로 응답
 
 from fastapi import FastAPI
 
+app = FastAPI()
 
+@app.get("/user/{name}")
+def get_user(name: str):
+    return {"message": f"Hello, {name}!"}
