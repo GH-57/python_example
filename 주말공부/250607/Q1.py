@@ -12,6 +12,7 @@ app = FastAPI()
 
 
 
-
-
+@app.post("/greet")
+def greet_user(name: str, age: int):
+    return {"message": f"안녕하세요, {name}님! 나이는 {age}세이군요."}
 
