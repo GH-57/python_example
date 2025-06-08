@@ -28,3 +28,40 @@ json// 요청
   "result": 21.0
 }
 '''
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI()
+
+# POST 요청용 모델
+class CalculationRequest(BaseModel):
+    a: float
+    b: float
+
+class CalculationResponse(BaseModel):
+    result: float
+
+# GET 요청 - 덧셈
+@app.get("/calculate/add", response_model=CalculationResponse)
+async def add(a: float, b: float):
+    return CalculationResponse(result=a + b)
+
+# GET 요청 - 뺄셈
+@app.get("/calculate/subtract", response_model=CalculationResponse)
+async def subtract(a: float, b: float):
+    return CalculationResponse(result=a - b)
+
+# POST 요청 - 곱셈
+@app.post("/calculate/multiply", response_model=CalculationResponse)
+async def multiply(request: CalculationRequest):
+    result = request.a * request.b
+    return CalculationResponse(result=result)
+
+# POST 요청 - 나눗셈
+@app.post("/calculate/divide", response_model=CalculationResponse)
+async def divide(request: CalculationRequest):
+    if request.b == 0:
+        raise HTTPException(status_code=400, detail="Division by zero is not allowed")
+    result = request.a / request.b
+    return CalculationResponse(result=result)

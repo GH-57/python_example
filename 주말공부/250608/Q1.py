@@ -22,3 +22,46 @@ json{
 }
 '''
 
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from typing import List
+
+app = FastAPI()
+
+# Pydantic 모델
+class TodoCreate(BaseModel):
+    title: str
+    completed: bool = False
+
+class Todo(BaseModel):
+    id: int
+    title: str
+    completed: bool
+
+# 메모리 저장소
+todos = []
+next_id = 1
+
+@app.get("/todos", response_model=List[Todo])
+async def get_todos():
+    return todos
+
+@app.get("/todos/{todo_id}", response_model=Todo)
+async def get_todo(todo_id: int):
+    for todo in todos:
+        if todo["id"] == todo_id:
+            return todo
+    raise HTTPException(status_code=404, detail="Todo not found")
+
+@app.post("/todos", response_model=Todo)
+async def create_todo(todo: TodoCreate):
+    global next_id
+    new_todo = {
+        "id": next_id,
+        "title": todo.title,
+        "completed": todo.completed
+    }
+    todos.append(new_todo)
+    next_id += 1
+    return new_todo
+
