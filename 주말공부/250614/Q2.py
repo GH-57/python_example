@@ -31,3 +31,35 @@ posts = []  # 게시글 저장소
 # 3. GET /posts/{post_id} - 특정 게시글 조회 (없으면 404 에러)
 
 # 여기에 코드 작성
+
+
+class PostResponse(BaseModel):
+    id: int
+    title: str
+    content: str
+    author: str
+    created_at: datetime
+
+
+@app.post("/posts")
+async def create_post(post: Post):
+    post_data = {
+        "id": len(posts) + 1,
+        "title": post.title,
+        "content": post.content,
+        "author": post.author,
+        "created_at": datetime.now()
+    }
+    posts.append(post_data)
+    return {"message": "게시글이 작성되었습니다", "post_id": post_data["id"]}
+
+@app.get("/posts")
+async def get_all_posts():
+    return {"posts": posts}
+
+@app.get("/posts/{post_id}")
+async def get_post(post_id: int):
+    for post in posts:
+        if post["id"] == post_id:
+            return post
+    raise HTTPException(status_code=404, detail="게시글을 찾을 수 없습니다")
