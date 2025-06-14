@@ -33,6 +33,7 @@ posts = []  # 게시글 저장소
 # 여기에 코드 작성
 
 
+
 class PostResponse(BaseModel):
     id: int
     title: str
