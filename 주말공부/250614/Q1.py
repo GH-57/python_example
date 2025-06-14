@@ -23,6 +23,7 @@ user_counter = 1
 # 여기에 코드 작성
 
 
+
 @app.post("/users")
 async def create_user(user: User):
     global user_counter
