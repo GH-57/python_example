@@ -15,6 +15,8 @@ app = FastAPI()
 #   "unique_words": 50,
 #   "top_words": [["the", 10], ["and", 8], ["is", 6], ["a", 5], ["to", 4]]
 # }
+
+
 @app.post("/analyze-text")
 async def analyze_text_file(file: UploadFile = File(...)):
     # 여기에 코드 작성
@@ -48,7 +50,6 @@ async def analyze_text_file(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="파일을 읽을 수 없습니다. UTF-8 인코딩 파일을 업로드해주세요")
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"파일 처리 중 오류가 발생했습니다: {str(e)}")
-
 
 
 # 힌트: 
