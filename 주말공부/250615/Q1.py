@@ -38,6 +38,7 @@ def verify_api_key(x_api_key: Optional[str] = Header(None)):
 # 여기에 코드 작성
 
 
+
 @app.get("/public")
 async def public_endpoint():
     return {"message": "누구나 볼 수 있습니다"}
