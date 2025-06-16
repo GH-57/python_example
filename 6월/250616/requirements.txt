@@ -4,6 +4,8 @@
 
 django-environ
 
+pyhub-llm[all]
+
 # 모든 python 애플리케이션 저장소에는 반드시 있는 파일
 # 해당 애플맄이션 구동에 필요한 모든 라이브러리들을 1줄에 하나씩 명시
 # 한방 설치: pip install -r requirements.txt
