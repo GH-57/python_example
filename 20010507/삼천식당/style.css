@@ -177,3 +177,16 @@ td button {
 .toast.error {
     background-color: #e74c3c;
 }
+
+/* 관리자 통계 컨테이너 스타일 */
+.stats-container {
+    display: flex;
+    gap: 20px; /* 항목 사이 간격 */
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 1rem 0; /* 위아래 간격 */
+    font-size: 1.1rem;
+    font-weight: 500;
+}

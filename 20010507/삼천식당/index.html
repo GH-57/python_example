@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>삼천식당 식수 신청</title>
-    <link rel="stylesheet" href="./app.js">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div id="toast-container"></div>
@@ -41,9 +41,11 @@
         </form>
     </div>
 
-    <!-- [핵심 수정] Firebase SDK 스크립트 태그를 여기서 삭제합니다. -->
-    
-    <!-- 내 앱 스크립트는 그대로 유지합니다. -->
-    <script type="module" src="app.js?v=1.0"></script>
+    <!-- [핵심] 성공했던 test.html과 동일한 방식으로 Firebase 라이브러리를 불러옵니다. -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+    <!-- [핵심] type="module"을 제거한 일반 스크립트로 app.js를 불러옵니다. -->
+    <script src="./app.js"></script>
 </body>
 </html>
