@@ -1,6 +1,7 @@
 # 라이브러리 의존성 명시
 # - 의존성 (dependencies)
 #   이 애플리케이션 구동에 꼭 필요하다.
+
 django-environ
 
 # 모든 python 애플리케이션 저장소에는 반드시 있는 파일
