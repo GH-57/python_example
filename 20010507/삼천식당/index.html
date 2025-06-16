@@ -1,0 +1,49 @@
+<!-- 신청자용 페이지 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>삼천식당 식수 신청</title>
+    <link rel="stylesheet" href="./app.js">
+</head>
+<body>
+    <div id="toast-container"></div>
+
+    <div class="container">
+        <h1>✅ 삼천식당 식수 신청</h1>
+        <p>식사를 원하시는 분은 성함을 입력하고 신청 버튼을 눌러주세요.<br>신청 후 입금이 확인되면 아래 확정 명단에 표시됩니다.</p>
+
+        <form id="apply-form">
+            <input type="text" id="name-input" placeholder="성함을 입력하세요" required>
+            <button type="submit">식수 신청하기</button>
+        </form>
+
+        <div id="info-message" class="info">
+            <p><strong>입금 안내:</strong> 식수 신청 후 아래 계좌로 입금해주시면 감사하겠습니다.</p>
+            <p><strong>[은행 이름] 123-456-789012 (예금주: OOO)</strong></p>
+        </div>
+
+        <hr>
+
+        <h2>✅ 식사 확정 명단</h2>
+        <div id="applicant-list">
+            <p>로딩 중...</p>
+        </div>
+
+        <hr>
+
+        <h2>신청 취소</h2>
+        <p>입금 전 신청을 취소하시려면 성함을 입력해주세요.</p>
+        <form id="cancel-form">
+            <input type="text" id="cancel-name-input" placeholder="취소할 성함을 입력하세요" required>
+            <button type="submit">신청 취소하기</button>
+        </form>
+    </div>
+
+    <!-- [핵심 수정] Firebase SDK 스크립트 태그를 여기서 삭제합니다. -->
+    
+    <!-- 내 앱 스크립트는 그대로 유지합니다. -->
+    <script type="module" src="app.js?v=1.0"></script>
+</body>
+</html>
