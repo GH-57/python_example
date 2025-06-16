@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>삼천식당 관리자 페이지</title>
-    <link rel="stylesheet" href="./style.css">
+    <!-- [수정] 캐시 무효화를 위해 버전 변경 -->
+    <link rel="stylesheet" href="./style.css?v=1.4">
 </head>
 <body>
     <div class="container">
@@ -21,23 +22,28 @@
 
         <button id="reset-button" class="danger-btn">모든 신청내역 초기화</button>
 
-        <table id="admin-table">
-            <thead>
-                <tr>
-                    <th>순번</th>
-                    <th>이름</th>
-                    <th>신청 시간</th>
-                    <th>입금 여부</th>
-                    <th>관리</th>
-                </tr>
-            </thead>
-            <tbody id="admin-table-body">
+        <!-- [추가] 테이블을 감싸는 div 추가 (가로 스크롤용) -->
+        <div class="table-container">
+            <table id="admin-table">
+                <thead>
+                    <tr>
+                        <th>순번</th>
+                        <th>이름</th>
+                        <th>신청 시간</th>
+                        <th>입금 여부</th>
+                        <th>관리</th>
+                    </tr>
+                </thead>
+                <tbody id="admin-table-body">
+                    <!-- 자바스크립트를 통해 데이터가 여기에 표시됩니다. -->
                 </tbody>
-        </table>
+            </table>
+        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-    <script src="./app.js"></script>
+    <!-- [수정] 캐시 무효화를 위해 버전 변경 -->
+    <script src="./app.js?v=1.5"></script>
 </body>
 </html>

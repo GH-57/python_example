@@ -1,0 +1,232 @@
+/* 기본 스타일 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 1.8rem;
+    word-break: keep-all; /* 단어 단위로 줄바꿈 */
+}
+
+h2 {
+    font-size: 1.4rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 2rem 0;
+}
+
+/* 폼 스타일 */
+form {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px;
+    margin-bottom: 1.5rem;
+}
+
+input[type="text"] {
+    flex-grow: 1;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+#cancel-form button {
+    background-color: #e74c3c;
+}
+
+#cancel-form button:hover {
+    background-color: #c0392b;
+}
+
+.info {
+    background-color: #e8f4fd;
+    border-left: 4px solid #3498db;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+/* 신청자 목록 */
+#applicant-list p {
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+/* [수정] 관리자 테이블 가로 스크롤 기능 제거 */
+.table-container {
+    width: 100%;
+}
+
+/* 관리자 테이블 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    table-layout: fixed; /* [추가] 컬럼 너비를 고정적으로 관리 */
+    word-break: break-all; /* [추가] 긴 텍스트(URL 등)도 줄바꿈 */
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    white-space: normal; /* [수정] 모바일에서 줄바꿈 허용 */
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+td .status-paid { color: green; font-weight: bold; }
+td .status-unpaid { color: red; }
+td button { padding: 5px 10px; font-size: 0.9rem; }
+
+/* 관리자 통계 컨테이너 스타일 */
+.stats-container {
+    display: flex;
+    gap: 20px;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    flex-wrap: wrap; 
+}
+
+/* 위험한 동작을 하는 버튼을 위한 스타일 */
+.danger-btn {
+    background-color: #e74c3c;
+    margin-bottom: 1.5rem;
+}
+.danger-btn:hover {
+    background-color: #c0392b;
+}
+
+/* 계좌번호 복사 버튼 스타일 */
+.account-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap; 
+}
+.account-info p { margin-bottom: 0; }
+#copy-button {
+    padding: 5px 12px;
+    font-size: 0.9rem;
+    background-color: #6c757d;
+    flex-shrink: 0;
+}
+#copy-button:hover { background-color: #5a6268; }
+
+/* 토스트 팝업 스타일 */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    width: 90%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.toast {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+    transform: translateY(-20px);
+    text-align: center;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { background-color: #27ae60; }
+.toast.error { background-color: #e74c3c; }
+
+
+/* --- [수정] 모바일 반응형 스타일 --- */
+@media (max-width: 768px) {
+    .container {
+        margin: 0; /* 모바일에서는 여백 없이 꽉 채움 */
+        padding: 15px;
+        box-shadow: none;
+        border-radius: 0;
+        width: 100%;
+    }
+
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.2rem; }
+
+    /* 신청/취소 폼을 가로 정렬로 변경하여 공간 효율성 증대 */
+    form#apply-form, form#cancel-form {
+        flex-direction: row;
+    }
+
+    /* [추가] 모바일에서 테이블을 더 컴팩트하게 만듭니다. */
+    th, td {
+        padding: 10px 5px; /* 상하좌우 패딩을 줄임 */
+        font-size: 0.8rem; /* 폰트 크기 줄임 */
+    }
+
+    td button {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+    }
+}

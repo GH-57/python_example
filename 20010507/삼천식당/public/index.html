@@ -5,28 +5,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>삼천식당 식수 신청</title>
-    <link rel="stylesheet" href="./style.css">
+    <!-- [수정] 캐시 무효화를 위해 버전 변경 -->
+    <link rel="stylesheet" href="./style.css?v=1.3">
 </head>
 <body>
     <div id="toast-container"></div>
 
     <div class="container">
         <h1>✅ 삼천식당 식수 신청</h1>
-        <p>식사를 원하시는 분은 성함을 입력하고 신청 버튼을 눌러주세요.<br>신청 후 입금이 확인되면 아래 확정 명단에 표시됩니다.</p>
+        <p>식사를 원하시는 분은 성함을 입력하고 <br>신청 버튼을 눌러주세요.<br>신청 후 입금이 확인되면 아래 확정 명단에 표시됩니다.</p>
 
         <form id="apply-form">
             <input type="text" id="name-input" placeholder="성함을 입력하세요" required>
-            <button type="submit">식수 신청하기</button>
+            <button type="submit">신청하기</button>
         </form>
 
         <div id="info-message" class="info">
-            <p><strong>입금 안내:</strong> 식수 신청 후 아래 계좌로 입금해주시면 감사하겠습니다.</p>
-            <p><strong>[은행 이름] 123-456-789012 (예금주: OOO)</strong></p>
+            <p><strong>입금 안내:</strong> 식수 신청 후 아래 계좌로 3,000원 입금해주시면 감사하겠습니다.</p>
+            <div class="account-info">
+                <p><strong>[국민은행] <span id="account-number">652702-04-349856</span> (예금주: 구예찬)</strong></p>
+                <button id="copy-button">복사</button>
+            </div>
         </div>
 
         <hr>
 
-        <h2>✅ 식사 확정 명단</h2>
+        <h2>✅ 식사 확정 명단 (총 <span id="confirmed-count">0</span>명)</h2>
         <div id="applicant-list">
             <p>로딩 중...</p>
         </div>
@@ -37,15 +41,13 @@
         <p>입금 전 신청을 취소하시려면 성함을 입력해주세요.</p>
         <form id="cancel-form">
             <input type="text" id="cancel-name-input" placeholder="취소할 성함을 입력하세요" required>
-            <button type="submit">신청 취소하기</button>
+            <button type="submit">취소하기</button>
         </form>
     </div>
 
-    <!-- [핵심] 성공했던 test.html과 동일한 방식으로 Firebase 라이브러리를 불러옵니다. -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
-    <!-- [핵심] type="module"을 제거한 일반 스크립트로 app.js를 불러옵니다. -->
-    <script src="./app.js"></script>
+    <!-- [수정] 캐시 무효화를 위해 버전 변경 -->
+    <script src="./app.js?v=1.3"></script>
 </body>
 </html>
