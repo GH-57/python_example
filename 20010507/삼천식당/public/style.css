@@ -301,3 +301,15 @@ td button { padding: 5px 10px; font-size: 0.9rem; }
         color: #333;
     }
 }
+
+.search-wrapper {
+    margin: 1rem 0;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

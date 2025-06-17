@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>삼천식당 식수 신청</title>
     <!-- [수정] 캐시 무효화를 위해 버전 변경 -->
-    <link rel="stylesheet" href="./style.css?v=2.1">
+    <link rel="stylesheet" href="./style.css?v=2.4">
 </head>
 <body>
     <div id="toast-container"></div>
@@ -13,9 +13,8 @@
     <div class="container">
         <h1>✅ 삼천식당 식수 신청</h1>
         
-        <!-- [수정] 상황에 맞는 안내 문구를 표시하기 위해 p 태그에 id 추가 -->
         <div id="deadline-notice" style="display: none;">
-            <p id="deadline-text">안내 문구가 여기에 표시됩니다.</p>
+            <p></p>
         </div>
 
         <div id="apply-wrapper">
@@ -31,7 +30,7 @@
             </form>
 
             <div id="info-message" class="info">
-                <p><strong>입금 안내:</strong> 아래 계좌로 3,000원을 입금해 주시고, 식수 신청해 주세요.</p>
+                <p><strong>입금 안내:</strong> 식수 신청 후 아래 계좌로 3,000원 입금해주시면 감사하겠습니다.</p>
                 <div class="account-info">
                     <p><strong>[국민은행] <span id="account-number">652702-04-349856</span> (예금주: 구예찬)</strong></p>
                     <button id="copy-button">복사</button>
@@ -41,26 +40,23 @@
             <hr>
 
             <h2>✅ 식사 확정 명단 (총 <span id="confirmed-count">0</span>명)</h2>
+            <!-- [추가] 이름 검색을 위한 검색창 -->
+            <div class="search-wrapper">
+                <input type="text" id="search-input" placeholder="이름으로 명단 검색">
+            </div>
             <div id="applicant-list">
                 <p>로딩 중...</p>
             </div>
 
             <hr>
-
-            <div id="cancel-section">
-                <h2>신청 취소</h2>
-                <p>입금 확인 전 신청을 취소하시려면 성함을 입력해주세요.</p>
-                <form id="cancel-form">
-                    <input type="text" id="cancel-name-input" placeholder="취소할 성함을 입력하세요" required>
-                    <button type="submit">신청 취소하기</button>
-                </form>
-            </div>
+            
+            <!-- [제거] 신청 취소 영역을 완전히 삭제했습니다. -->
         </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <!-- [수정] 캐시 무효화를 위해 버전 변경 -->
-    <script src="./app.js?v=2.1"></script>
+    <script src="./app.js?v=2.4"></script>
 </body>
 </html>
