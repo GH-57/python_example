@@ -25,7 +25,7 @@ function showToast(message, type = 'success') {
     setTimeout(() => { toast.classList.add('show'); }, 100);
     setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => { toast.remove(); }, 300);
+        setTimeout(() => { toast.remove(); }, 3000);
     }, 3000);
 }
 
@@ -41,6 +41,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- 신청자용 페이지 기능 ---
 function setupUserPage() {
+    const deadlineNotice = document.getElementById('deadline-notice');
+    const deadlineText = document.getElementById('deadline-text');
     const applyForm = document.getElementById('apply-form');
     const nameInput = document.getElementById('name-input');
     const applicantListDiv = document.getElementById('applicant-list');
@@ -49,6 +51,38 @@ function setupUserPage() {
     const confirmedCountSpan = document.getElementById('confirmed-count');
     const copyButton = document.getElementById('copy-button');
     const accountNumberSpan = document.getElementById('account-number');
+    const paidCheckbox = document.getElementById('paid-checkbox');
+    const applyButton = applyForm.querySelector('button[type="submit"]');
+
+    // [수정] 주일 오후 3시까지 신청 가능하도록 하는 로직
+    const now = new Date();
+    const day = now.getDay(); // 0=일요일
+    const hour = now.getHours(); // 0-23
+
+    // 신청 가능 조건: 오늘이 일요일이고, 현재 시간이 15시(오후 3시) 이전
+    const isApplicationOpen = (day === 0 && hour < 15);
+    
+    if (isApplicationOpen) {
+        // 신청 기간일 때
+        applyButton.disabled = false;
+        applyButton.textContent = '식수 신청하기';
+        deadlineNotice.style.display = 'none';
+    } else {
+        // 마감되었을 때
+        applyButton.disabled = true;
+        deadlineNotice.style.display = 'block';
+
+        // 마감 사유에 따라 다른 안내 문구 표시
+        if (day === 0 && hour >= 15) {
+            // 주일이지만 3시가 지났을 경우
+            applyButton.textContent = '신청 시간이 마감되었습니다';
+            deadlineText.innerHTML = '오늘 식수 신청이 마감되었습니다.<br>다음 주일에 다시 신청해주세요!';
+        } else {
+            // 주일이 아닐 경우
+            applyButton.textContent = '주일에만 신청 가능합니다';
+            deadlineText.innerHTML = '식수 신청은 주일에만 가능합니다.<br>주일에 다시 방문해주세요!';
+        }
+    }
 
     applicationsRef.where("paid", "==", true).orderBy("timestamp", "desc")
         .onSnapshot(
@@ -74,7 +108,15 @@ function setupUserPage() {
     applyForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = nameInput.value.trim();
+        const hasPaid = paidCheckbox.checked;
+
         if (!name) return;
+        
+        if (!hasPaid) {
+            showToast('입금 여부를 체크해주세요.', 'error');
+            return;
+        }
+
         const querySnapshot = await applicationsRef.where("name", "==", name).get();
         if (!querySnapshot.empty) {
             showToast('이미 해당 이름으로 신청(또는 대기) 중입니다.', 'error');
@@ -83,11 +125,12 @@ function setupUserPage() {
         try {
             await applicationsRef.add({
                 name: name,
-                paid: false,
+                paid: hasPaid,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             });
-            showToast('식수 신청이 접수되었습니다. 입금 확인 후 명단에 표시됩니다.');
+            showToast('식수 신청이 접수되었습니다.');
             nameInput.value = '';
+            paidCheckbox.checked = false;
         } catch (error) {
             console.error("신청 중 오류 발생:", error);
             alert("신청 처리 중 오류가 발생했습니다.");
@@ -105,7 +148,7 @@ function setupUserPage() {
         }
         const docToDelete = querySnapshot.docs[0];
         if (docToDelete.data().paid) {
-            showToast('이미 입금이 확인되어 취소할 수 없습니다.', 'error');
+            showToast('이미 입금이 확인되어 취소할 수 없습니다. 관리자에게 문의하세요.', 'error');
             return;
         }
         await docToDelete.ref.delete();
@@ -155,22 +198,16 @@ function setupAdminPage() {
         let paidCount = 0;
         let unpaidCount = 0;
         let index = 1;
-
         snapshot.forEach(doc => {
             const data = doc.data();
-
             if (data.paid) {
                 paidCount++;
             } else {
                 unpaidCount++;
             }
-
             const tr = document.createElement('tr');
             const date = data.timestamp ? data.timestamp.toDate() : new Date();
-            
-            // [수정] 날짜와 시간 사이에 줄바꿈(<br>)을 추가합니다.
             const formattedDate = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}<br>${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-            
             tr.innerHTML = `
                 <td data-label="순번">${index}</td>
                 <td data-label="이름">${data.name}</td>
@@ -181,16 +218,12 @@ function setupAdminPage() {
             tableBody.appendChild(tr);
             index++;
         });
-
         paidCountSpan.textContent = paidCount;
         unpaidCountSpan.textContent = unpaidCount;
-
-
         document.querySelectorAll('.toggle-paid-btn').forEach(button => {
             button.addEventListener('click', async (e) => {
                 const docId = e.target.dataset.id;
                 const currentPaid = e.target.dataset.currentPaid === 'true';
-                
                 try {
                     await applicationsRef.doc(docId).update({ paid: !currentPaid });
                 } catch (error) {

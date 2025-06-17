@@ -87,6 +87,14 @@ button:hover {
     background-color: #c0392b;
 }
 
+/* 비활성화된 버튼 스타일 */
+button:disabled,
+button:disabled:hover {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+}
+
 .info {
     background-color: #e8f4fd;
     border-left: 4px solid #3498db;
@@ -102,25 +110,18 @@ button:hover {
     margin-bottom: 5px;
 }
 
-/* [수정] 관리자 테이블 가로 스크롤 기능 제거 */
-.table-container {
-    width: 100%;
-}
-
 /* 관리자 테이블 */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
-    table-layout: fixed; /* [추가] 컬럼 너비를 고정적으로 관리 */
-    word-break: break-all; /* [추가] 긴 텍스트(URL 등)도 줄바꿈 */
 }
 
 th, td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
-    white-space: normal; /* [수정] 모바일에서 줄바꿈 허용 */
+    white-space: normal;
 }
 
 th {
@@ -200,33 +201,103 @@ td button { padding: 5px 10px; font-size: 0.9rem; }
 .toast.success { background-color: #27ae60; }
 .toast.error { background-color: #e74c3c; }
 
+/* 신청 마감/불가 안내 스타일 */
+#deadline-notice {
+    background-color: #fffbe6;
+    border: 1px solid #fde68a;
+    color: #a16207;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
 
-/* --- [수정] 모바일 반응형 스타일 --- */
+/* 입금 여부 체크박스 컨테이너 스타일 */
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.checkbox-wrapper:hover {
+    background-color: #e9ecef;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #3498db; /* 체크 시 색상을 파란색으로 */
+}
+
+.checkbox-wrapper label {
+    font-size: 1rem;
+    color: #495057;
+    cursor: pointer;
+}
+
+
+/* --- [핵심 수정] 모바일 반응형 스타일 --- */
 @media (max-width: 768px) {
     .container {
-        margin: 0; /* 모바일에서는 여백 없이 꽉 채움 */
+        margin: 0;
         padding: 15px;
         box-shadow: none;
         border-radius: 0;
         width: 100%;
     }
 
-    h1 { font-size: 1.5rem; }
-    h2 { font-size: 1.2rem; }
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.3rem; }
 
-    /* 신청/취소 폼을 가로 정렬로 변경하여 공간 효율성 증대 */
-    form#apply-form, form#cancel-form {
-        flex-direction: row;
+    /* [수정] 관리자 페이지 테이블을 모바일에서 보기 편한 카드 형태로 변경 */
+    #admin-table thead {
+        /* thead를 화면에서 숨깁니다 */
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
     }
-
-    /* [추가] 모바일에서 테이블을 더 컴팩트하게 만듭니다. */
-    th, td {
-        padding: 10px 5px; /* 상하좌우 패딩을 줄임 */
-        font-size: 0.8rem; /* 폰트 크기 줄임 */
+    
+    #admin-table tr {
+        /* 각 행을 카드처럼 보이게 만듭니다 */
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        display: block;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: #fff;
     }
-
-    td button {
-        padding: 5px 8px;
-        font-size: 0.75rem;
+    
+    #admin-table td {
+        /* 각 셀을 한 줄씩 차지하도록 변경 */
+        border-bottom: 1px dotted #ccc;
+        display: block;
+        font-size: .9em;
+        text-align: right; /* 값을 오른쪽으로 정렬 */
+        padding: 10px 5px;
+    }
+    
+    #admin-table td:last-child {
+        border-bottom: 0;
+    }
+    
+    #admin-table td::before {
+        /* CSS의 content 속성을 이용해 각 셀에 라벨을 붙여줍니다. */
+        /* 이 기능이 작동하려면 app.js에서 td에 data-label 속성을 추가해야 합니다. (이미 적용되어 있습니다.) */
+        content: attr(data-label);
+        float: left; /* 라벨을 왼쪽으로 정렬 */
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-right: 10px;
+        color: #333;
     }
 }
