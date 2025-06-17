@@ -25,7 +25,7 @@ function showToast(message, type = 'success') {
     setTimeout(() => { toast.classList.add('show'); }, 100);
     setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => { toast.remove(); }, 3000);
+        setTimeout(() => { toast.remove(); }, 300);
     }, 3000);
 }
 
@@ -54,8 +54,6 @@ function setupUserPage() {
     const searchInput = document.getElementById('search-input');
     
     let fullConfirmedList = [];
-
-    // [수정] 주일 오후 3시 마감 시, 버튼만 비활성화하는 로직으로 복원
     const now = new Date();
     const day = now.getDay();
     const hour = now.getHours();
@@ -77,31 +75,23 @@ function setupUserPage() {
         }
     }
 
-    // [수정] 데이터를 'name' 필드 기준으로 가나다순 정렬하여 조회합니다.
     applicationsRef.where("paid", "==", true).orderBy("name", "asc")
         .onSnapshot(
             (snapshot) => {
                 confirmedCountSpan.textContent = snapshot.size;
-                
                 const names = [];
-                snapshot.forEach(doc => {
-                    names.push(doc.data().name);
-                });
-
-                fullConfirmedList = names; // 서버에서 이미 정렬된 목록을 저장
-                
+                snapshot.forEach(doc => { names.push(doc.data().name); });
+                fullConfirmedList = names;
                 renderList(fullConfirmedList);
             },
             (error) => { 
                 console.error("확정 명단 업데이트 중 오류:", error); 
-                // [중요] 이 에러는 보통 색인이 필요하다는 의미입니다.
                 if (error.code === 'failed-precondition') {
                     alert("명단 정렬에 필요한 데이터베이스 설정이 필요합니다. 개발자 도구(F12)의 콘솔에 보이는 파란색 링크를 클릭하여 색인을 생성해주세요.");
                 }
             }
         );
 
-    // 목록을 화면에 그려주는 함수
     function renderList(listToRender) {
         applicantListDiv.innerHTML = '';
         if (listToRender.length === 0) {
@@ -115,16 +105,13 @@ function setupUserPage() {
         }
     }
 
-    // 검색창에 입력할 때마다 목록을 필터링하는 이벤트
     searchInput.addEventListener('input', (e) => {
         const searchTerm = e.target.value.toLowerCase();
         if (!searchTerm) {
             renderList(fullConfirmedList);
             return;
         }
-        const filteredList = fullConfirmedList.filter(name => 
-            name.toLowerCase().includes(searchTerm)
-        );
+        const filteredList = fullConfirmedList.filter(name => name.toLowerCase().includes(searchTerm));
         renderList(filteredList);
     });
 
@@ -172,13 +159,11 @@ function setupUserPage() {
     });
 }
 
-// --- 관리자용 페이지 기능 (변경 없음) ---
+// --- 관리자용 페이지 기능 ---
 function setupAdminPage() {
     const tableBody = document.getElementById('admin-table-body');
-    const totalCountSpan = document.getElementById('total-count');
     const resetButton = document.getElementById('reset-button');
     const paidCountSpan = document.getElementById('paid-count');
-    const unpaidCountSpan = document.getElementById('unpaid-count');
 
     resetButton.addEventListener('click', async () => {
         if (!confirm("정말로 모든 신청 내역을 삭제하시겠습니까?")) return;
@@ -195,41 +180,47 @@ function setupAdminPage() {
 
     applicationsRef.orderBy("timestamp", "asc").onSnapshot(snapshot => {
         tableBody.innerHTML = '';
-        totalCountSpan.textContent = snapshot.size;
-        let paidCount = 0;
-        let unpaidCount = 0;
         let index = 1;
+        let paidCount = 0;
+
         snapshot.forEach(doc => {
             const data = doc.data();
+            
             if (data.paid) {
                 paidCount++;
-            } else {
-                unpaidCount++;
             }
+
             const tr = document.createElement('tr');
             const date = data.timestamp ? data.timestamp.toDate() : new Date();
             const formattedDate = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}<br>${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+            
+            // [수정] 상태 표시를 '신청 완료'로 변경합니다. 
+            // '미입금 신청'은 현재 로직상 나타나지 않지만, 만약을 위해 다른 이름으로 남겨둡니다.
             tr.innerHTML = `
                 <td data-label="순번">${index}</td>
                 <td data-label="이름">${data.name}</td>
                 <td data-label="신청 시간">${formattedDate}</td>
-                <td data-label="입금 여부"><span class="status-${data.paid ? 'paid' : 'unpaid'}">${data.paid ? '입금 완료' : '미납'}</span></td>
-                <td data-label="관리"><button class="toggle-paid-btn" data-id="${doc.id}" data-current-paid="${data.paid}">${data.paid ? '미납으로 변경' : '입금 확인'}</button></td>
+                <td data-label="상태"><span class="status-paid">${data.paid ? '신청 완료' : '오류(미입금)'}</span></td>
+                <td data-label="작업"><button class="delete-btn" data-id="${doc.id}">삭제</button></td>
             `;
             tableBody.appendChild(tr);
             index++;
         });
+
         paidCountSpan.textContent = paidCount;
-        unpaidCountSpan.textContent = unpaidCount;
-        document.querySelectorAll('.toggle-paid-btn').forEach(button => {
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', async (e) => {
                 const docId = e.target.dataset.id;
-                const currentPaid = e.target.dataset.currentPaid === 'true';
-                try {
-                    await applicationsRef.doc(docId).update({ paid: !currentPaid });
-                } catch (error) {
-                    console.error("입금 상태 변경 실패! Firestore 보안 규칙을 확인하세요.", error);
-                    alert("오류: 입금 상태를 변경할 수 없습니다.");
+                
+                if (confirm("이 신청 기록을 정말로 삭제하시겠습니까?")) {
+                    try {
+                        await applicationsRef.doc(docId).delete();
+                        alert("신청 기록이 삭제되었습니다.");
+                    } catch (error) {
+                        console.error("삭제 중 오류 발생:", error);
+                        alert("오류: 기록을 삭제할 수 없습니다.");
+                    }
                 }
             });
         });
