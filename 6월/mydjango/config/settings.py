@@ -11,10 +11,14 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+from environ import Env
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = Env()
+
+ENV_PATH = BASE_DIR / ".env"
+env.read_env(ENV_PATH, overwrite=True)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -121,3 +125,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# 환경변수에 OPEN_API_KEY가 있으면 반환하고, 없으면 대신 None 반환
+OPENAI_API_KEY = env.str('OPENAI_API_KEY', default=None)
+# 환경변수에 UPSYAGE_API_KEY가 있으면 반환하고, 없으면 대신 None 반환
+UPSTAGE_API_KEY = env.str('UPSTAGE_API_KEY', default=None)
