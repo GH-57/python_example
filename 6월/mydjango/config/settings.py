@@ -121,6 +121,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# MEDIA_URL로 시작하는 URL 요청이 있다면
+#   요청 파일을 MEDIA_ROOT루트로 
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+# 장고에서 유저가 업로드된 파일을 저장할 경로를 설정해주는 것 이다.
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 

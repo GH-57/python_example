@@ -1,5 +1,6 @@
 from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render
+from chat.models import PuzzleRoom
 
 # django view : http 요청을 받아 요청을 처리하는 함수 
 # => 장고 에서는 클래스로 View를 만들것이다. 
@@ -58,7 +59,16 @@ query=python
 ackey=4rvenuph
 '''
 
-# chat/views.py
+# TODO: 왜 puzzle_room_list가 아니라 puzzleroom_list 인가요?
+def puzzleroom_list(request):
+    # puzzle room 테이블에 있는 모든 레코드를 가져올 준비
+    qs = PuzzleRoom.objects.all()
+    return render(
+        request, 
+        template_name="chat/puzzleroom_list.html",
+        context={"puzzleroom_list": qs})
+
+
 
 # chat/urls.py에서 name 인자를 추출해서
 # View 함수 호출 시에 자동으로 인자를 전달해줍니다.
@@ -81,6 +91,7 @@ def puzzle_room(request: HttpRequest, name: str) -> HttpResponse:
             "mario": "/static/chat/mario.jpg",
             "toy": "/static/chat/toy-story.jpg",
             "kirby": "/static/chat/kirby.jpg",
+            "openai-1": "/static/chat/openai-1.png",
         }[name]
     except KeyError:
         # 위에서 임포트 : from django.http import Http404
