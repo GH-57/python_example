@@ -126,6 +126,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# python 기본에서 지원하는 환경변수 조회
+# import os 
+# os.environ["OPENAI)API_KEY"]
+
+# django-environ을 통해서 환경변수 조회: 장고치노하적인 기능이 많다
 
 # 환경변수에 OPEN_API_KEY가 있으면 반환하고, 없으면 대신 None 반환
 OPENAI_API_KEY = env.str('OPENAI_API_KEY', default=None)
