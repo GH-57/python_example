@@ -1,6 +1,7 @@
 from django.http import HttpRequest, HttpResponse, Http404
 from django.shortcuts import render, redirect
 from chat.models import PuzzleRoom
+from chat.forms import PuzzleRoomForm, PuzzleRoomEditForm
 
 # django view : http 요청을 받아 요청을 처리하는 함수
 # => 장고 에서는 클래스로 View를 만들것이다.
@@ -124,7 +125,7 @@ def puzzleroom_play(request: HttpRequest, id: int) -> HttpResponse:
     )
 
 # import 코드는 소스코드 최상단에 써주세요. (보기 편하기 위해 임시로 여기 작성)
-from chat.forms import PuzzleRoomForm
+
 
 # 1개의 PuzzleRoom 생성을 위해서, 최소 2번의 요청을 받을 것이다.
 #  1) 빈 입력 서식을 보여줘야 한다
@@ -155,6 +156,26 @@ def puzzleroom_new(request: HttpRequest) -> HttpResponse:
 
 
     # 장고의 문화 대로, 파일명과 View 이름을 쓰고 있다.
+    return render(request, "chat/puzzleroom_form.html", {
+        "form":form,
+    })
+
+## 수정
+def puzzleroom_edit(request: HttpRequest, id: int) -> HttpResponse:
+    # 수정 대상을 데이터베이스에서 조회
+    room = PuzzleRoom.objects.get(id=id)
+
+    if request.method == "GET": 
+        form = PuzzleRoomEditForm(instance=room)
+        
+    else: 
+        form = PuzzleRoomEditForm(instance=room, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save() 
+            return redirect("/chat/puzzle/") 
+        else:
+            pass 
+
     return render(request, "chat/puzzleroom_form.html", {
         "form":form,
     })

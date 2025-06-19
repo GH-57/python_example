@@ -22,4 +22,7 @@ urlpatterns = [
     path("puzzle/<int:id>/", views.puzzleroom_play),  # ADDED
 
     path("puzzle/new/", views.puzzleroom_new),
+
+    path("puzzle/<int:id>/edit/", views.puzzleroom_edit),  
+
 ]
