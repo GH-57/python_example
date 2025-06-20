@@ -14,4 +14,6 @@ from .models import Post
 # 세번째 방법
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["title", "status"] # 옵션 커스터마이징
+    search_fields = ["title"] # 옵션 검색필드 추가
+    list_filter = ["status"] # 필터 옵션 추가
