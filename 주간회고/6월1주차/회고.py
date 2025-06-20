@@ -15,6 +15,7 @@ class Book(BaseModel):
 books_db = {}
 
 
+
 @app.get("/books") # 모든 도서 목록 조회
 def get_books():
     return list(books_db.values())
