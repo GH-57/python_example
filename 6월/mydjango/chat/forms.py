@@ -27,3 +27,4 @@ class PuzzleRoomEditForm(forms.ModelForm):
         # - 유저에게 level 필드만 입력 필드 제공, 값을 변경할 수 있다.
         # - 지정 필드에 대해서만 수정 허용
         fields = ["level"]
+        

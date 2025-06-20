@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     # loccal apps
     "chat",
+    'blog',
 ]
 
 MIDDLEWARE = [

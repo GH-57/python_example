@@ -19,7 +19,7 @@ class PuzzleRoom(models.Model):
     level = models.PositiveSmallIntegerField(choices=LEVEL_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
+    # ... 
 
 # class ChatMessage(models.Model):
 #     message = models.TextField()

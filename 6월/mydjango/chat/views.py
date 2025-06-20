@@ -124,7 +124,14 @@ def puzzleroom_play(request: HttpRequest, id: int) -> HttpResponse:
         },
     )
 
-# import 코드는 소스코드 최상단에 써주세요. (보기 편하기 위해 임시로 여기 작성)
+# CBV 예시
+from django.views.generic import CreateView
+
+puzzleroom_new = CreateView.as_view(
+    model=PuzzleRoom,
+    form_class=PuzzleRoomForm,
+    success_url="/chat/puzzle/",
+)
 
 
 # 1개의 PuzzleRoom 생성을 위해서, 최소 2번의 요청을 받을 것이다.
