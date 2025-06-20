@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <title>Blog</title>
+</head>
+<body>
+    {# 모델명이 길더라도 : HelloWorldDjangoPython #}
+    {# => helloworlddjangopython #}
+
+    {# 특정 템플릿 파일을 여러 View에서 재사용할 경우 #}
+    {# 그래서 CBV에서는 일반적인 이름인 object 도 지원합니다. #}
+    {# ListView => object_list 혹은 모델명소문자_list #}
+    {# DetailView => object 혹은 모델명소문자 #}
+
+    <h1>{{ post.title }}</h1>
+
+    {# 장고 템플릿 필터 #}
+    {#{ post.content | linebreaks }} {# 각 문단을 <p>태그 로 감싸준다#}
+    {{ post.content | linebreaksbr}} {# 각 문단끝에 <br>태그 추가#}
+    
+
+</body>
+</html>
