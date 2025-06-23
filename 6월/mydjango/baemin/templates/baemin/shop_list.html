@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상점 목록</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: sans-serif;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: blue;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>상점 목록</h1>
+    <ul>
+        {% for shop in shop_list %}
+            <li>
+                <a href="/baemin/{{shop.pk}}/">{{ shop.name }}</a>
+            </li>
+        {% empty %}
+            <li>상점이 없습니다.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
