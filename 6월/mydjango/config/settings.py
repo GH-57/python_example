@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # loccal apps
     "chat",
     'blog',
+    "baemin",
 ]
 
 MIDDLEWARE = [
