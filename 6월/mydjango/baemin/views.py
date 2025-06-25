@@ -11,10 +11,10 @@ def shop_list(request):
     qs = Shop.objects.all() # QuerySet
 
     return render(request,
-                  template_name="baemin/shop_list.html",
-                  context={
+                template_name="baemin/shop_list.html",
+                context={
                     "shop_list": qs,
-                  })
+                })
 
 
 # TODO: baemin/shop_list.html 템플릿을 만들어보기, 하얀배경도 ok. chatgpt OK
@@ -41,6 +41,7 @@ def shop_detail(request, pk):
 from .forms import ReviewForm
 
 def review_new(request, shop_pk):
+    shop = Shop.objects.get(pk=shop_pk) # form 시작할 때, 지정 pk의 Shop의 존재 유무 확인
     if request.method == "GET":
         form = ReviewForm()
 
@@ -54,9 +55,6 @@ def review_new(request, shop_pk):
             shop_url = f"/baemin/{shop_pk}/"
             return redirect(shop_url)
 
-
-
-        # TODO: ...
 
     return render(
         request,
