@@ -30,7 +30,9 @@ SECRET_KEY = "django-insecure-@49-w7yqo91rj&=h_pr48r#l6%_iayqykx^9#1!()za4lz#2sy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "112.165.122.137", # 여러분들의 아이피 (사설 or 공인)
+]
 
 
 # Application definition

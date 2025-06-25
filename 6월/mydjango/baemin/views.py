@@ -56,7 +56,6 @@ def review_new(request, shop_pk):
 
 
 
-
         # TODO: ...
 
     return render(
