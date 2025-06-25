@@ -1,0 +1,25 @@
+{% extends "baemin/base.html" %}
+{% load django_bootstrap5 %} {# 파이썬의 import #}
+
+{% block content %}
+    {# 자식템플릿은 block을 재정의 하지 않은 코드는 무시된다. #}
+    {# form novalidate 속성 : 브라우저에게 유효성 검사 하지마. 라고 지시.#}
+    <form action="" method="post" 
+        enctype="multipart/form-data"
+        novalidate>
+        {#장고 템플릿 태그 중에 csrf_token 호출 #}
+        {# 장고 템플릿 태그/필터 : 템플릿 내에서 사용하는 함수#}
+        {% csrf_token %}
+
+        {% bootstrap_form form %}
+
+        <table>
+            {# 폼 필드 스타일링 #}
+            {# 1) 직접 HTML 구성 #}
+            {# 2) form 필드를 하나씩 직접 활용 #}
+            {# 3) django-bootstrap5, django-crispy-forms 라이브러리 활용 #}
+            {{ form.as_table }}
+        </table>
+        <input type="submit" class="btn btn-primary" />
+    </form>
+{% endblock %}
