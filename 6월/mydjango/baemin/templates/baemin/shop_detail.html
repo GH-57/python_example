@@ -1,4 +1,7 @@
-{% load django_bootstrap5 %}
+{% extends "baemin/base.html" %}
+{% load django_bootstrap5 %} {# 파이썬의 import #}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -73,3 +76,4 @@
     <p><a href="/baemin/">목록으로 돌아가기</a>
 </body>
 </html>
+{% endblock %}
