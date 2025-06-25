@@ -49,10 +49,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third apps
     "debug_toolbar",
+    "django_bootstrap5",
     # loccal apps
     "chat",
     'blog',
     "baemin",
+    
 ]
 
 MIDDLEWARE = [

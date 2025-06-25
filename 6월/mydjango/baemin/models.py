@@ -44,12 +44,19 @@ class Review(models.Model):
     # rating = models.IntegerField # 음수/양수 다 담을 수 있다.
     # rating = models.PositiveIntegerField # 양수만 담을 수 있다. 담을 수 있는 양수의 범위 2배 커짐
     rating = models.PositiveSmallIntegerField(
-        # Validator: 입력된 값에 대한 유효성 검사를 수행해주는 다수의 함수
-        validators=[
-            # MinValueValidator(1), 
-            make_validator_min(1), # 함수가 함수를 생성한 버전
-            MaxValueValidator(5),  # 클래스를 함수처럼 사용한 백신, 클래스를 함수처럼 사용한 버전
-            ],
+        # # Validator: 입력된 값에 대한 유효성 검사를 수행해주는 다수의 함수
+        # validators=[
+        #    # MinValueValidator(1), 
+        #    make_validator_min(1), # 함수가 함수를 생성한 버전
+        #    MaxValueValidator(5),  # 클래스를 함수처럼 사용한 백신, 클래스를 함수처럼 사용한 버전
+        #     ],
+        choices=[  # 모든 모델 필드에서 제공
+            (1, '1점'),
+            (2, '2점'),
+            (3, '3점'),
+            (4, '4점'),
+            (5, '5점'),
+        ],
         help_text="1점~5점 사이 점수를 주세요 :)"
     )
 
