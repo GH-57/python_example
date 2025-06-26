@@ -28,9 +28,9 @@ env.read_env(ENV_PATH, overwrite=True)
 SECRET_KEY = "django-insecure-@49-w7yqo91rj&=h_pr48r#l6%_iayqykx^9#1!()za4lz#2sy"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=False)
 
-# 환경변수 문자열에서 콤마(,)를 구분자로 해서, 리스ㅡ로 자동 변환
+# 환경변수 문자열에서 콤마(,)를 구분자로 해서, 리스트로 자동 변환
 ALLOWED_HOSTS = env.list(
     "ALLOWED_HOSTS", 
     default=["127.0.0.1"],
