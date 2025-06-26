@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.http import Http404
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Shop, Review
 from blog.forms import CommentForm
@@ -125,3 +125,24 @@ def review_edit(request, shop_pk, pk):
         template_name="baemin/review_form.html",
         context={"form": form},
     )
+
+
+# 장고 스타일의 삭제 방식
+#  1) GET 요청: 삭제를 요청했을 때 -> 확인 과정을 거친다. (정말 삭제하시겠습니까?)
+#  2) POST 요청: 삭제 확인 (confirm) -> 삭제를 합니다.
+def review_delete(request: HttpRequest, shop_pk, pk) -> HttpResponse:
+    if request.method == "GET":
+        return render(request, 
+                      "baemin/review_confirm_delete.html")
+    
+    review = get_object_or_404(Review, pk=pk)
+    review.delete() # DB에서 호출 즉시 삭제된다.
+
+    messages.success(request, "지정 리뷰를 삭제했습니다.")
+
+    shop_url = f"/baemin/{shop_pk}/"
+    return redirect(shop_url)
+        
+
+    # TODO: shop detail 페이지에 직접 리뷰 쓰기 폼 노출하기
+    # TODO: 페이지 전환없이 리뷰 삭제 해보기. (JS 버전 vs htmx 버전)
