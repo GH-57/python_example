@@ -65,15 +65,21 @@
             <div class="review">
                 <p><strong>평점:</strong> {{ review.rating }}점</p>
                 <p>{{ review.content }}</p>
+                {# a태그를 바로 작성하지 않고 url을 먼저 작성하는 이유는 #}
+                {# 대개, url 작성에서 오류가 발생하는 분들이 많다. 인자 지정에 오타 등의 이유#}
+                <a href="/baemin/{{ shop.pk}}/reviews/{{review.pk}}/edit/">수정</a>
+                
+                Delete
             </div>
         {% empty %}
         <p>아직 리뷰가 없습니다.</p>
         {% endfor %}
     </div>
-
+    
     <a href="/baemin/{{shop.pk}}/reviews/new/">리뷰쓰기</a></p>
     <hr />
     <p><a href="/baemin/">목록으로 돌아가기</a>
+        
 </body>
 </html>
 {% endblock %}

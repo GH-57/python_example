@@ -1,8 +1,10 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.http import Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Shop, Review
 from blog.forms import CommentForm
 from blog.models import Comment
+from .forms import ReviewForm
 
 # 최신의 가게 목록 페이지를 보여줄 것이다
 # - 최신의 데이터는 DB안에 있다, 그러니 매번 DB 조회를 할 것이다
@@ -22,8 +24,9 @@ def shop_list(request):
 
 def shop_detail(request, pk):
     # DB에서 조회했습니다.
-    shop = Shop.objects.get(pk=pk) # 이 필드명 지정이 좀 더 정확한 네이밍.
+    # shop = Shop.objects.get(pk=pk) # 이 필드명 지정이 좀 더 정확한 네이밍.
     # shop = Shop.objects.get(id=pk)  # 위와 동일한 동작
+    shop = get_object_or_404(Shop, pk=pk)
 
     # 정렬(sort) : 정렬 기준으로 2개 이상 두 수 있다
     # 각 정렬은 오름차순, 내림차순을 지정가능
@@ -56,10 +59,12 @@ def shop_detail(request, pk):
 
 # TODO: baemin/shop_detail.html 템플릿을 만들어보기.
 
-from .forms import ReviewForm
+
 
 def review_new(request, shop_pk):
-    shop = Shop.objects.get(pk=shop_pk) # form 시작할 때, 지정 pk의 Shop의 존재 유무 확인
+    # shop = Shop.objects.get(pk=shop_pk) 
+    ## form 시작할 때, 지정 pk의 Shop의 존재 유무 확인
+    shop = get_object_or_404(Shop, pk=shop_pk)
     if request.method == "GET":
         form = ReviewForm()
 
@@ -73,6 +78,43 @@ def review_new(request, shop_pk):
             # 한국어를 쓰는 사람을 대상으로만 하는 서비스니까, 메시지는 한국어로 쓴다
             # 만약 영어 등 다국어를 지원해야한다면, 메시지를 쓰는 방법이 조금 달라요.
             messages.success(request, "고객님의 리뷰에 감사드립니다. ;)")
+
+            shop_url = f"/baemin/{shop_pk}/"
+            return redirect(shop_url)
+
+
+    return render(
+        request,
+        template_name="baemin/review_form.html",
+        context={"form": form},
+    )
+
+def review_edit(request, shop_pk, pk):
+    # 모델클래스 .object => Model Manager
+    # .all
+    # .get
+    # .filter
+    # .exclude
+    # .order_by
+
+    # 지정 조건의 레코드가 DB에 없을 때 Review.DoesNotExist 예외가 발생
+    # try:
+    #     review = Review.objects.get(pk=pk) # 지정 조건의 레코드가 DB가 1개 있어야 한다
+    # except Review.DoesNotExist:
+    #     raise Http404
+    
+    ## 위 코드와 같은 기능 
+    review = get_object_or_404(Review, pk=pk)
+
+    if request.method == "GET":
+        form = ReviewForm(instance=review)
+
+    else:
+        form = ReviewForm(instance=review, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            # 리뷰 수정시에는 ReviewForm 클래스 안에서 정의된 필드에 대해서만 저장되어도 O
+            form.save()
+            messages.success(request, "리뷰가 수정되었습니다. ;)")
 
             shop_url = f"/baemin/{shop_pk}/"
             return redirect(shop_url)
