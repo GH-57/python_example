@@ -60,6 +60,14 @@ class Review(models.Model):
         help_text="1점~5점 사이 점수를 주세요 :)"
     )
 
+
+# Review 쿼리셋에 대한 디폴트 정렬
+#  - Review 쿼리셋에서 order_by를 지정하지 않으면, 자동으로 적용
+    class Meta:
+        ordering = ["-id"]
+
+
+
     # 1 bit => 0과 1을 표현 => 값을 2가지 표현 가능
     # 2 bit => 2 ** 2 => 4가지 표현 가능
     # 3 bit => 8가지

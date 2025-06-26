@@ -43,7 +43,7 @@ def shop_detail(request, pk):
     #  - 조회할 때마다 다른 순서로 조회가 될 수도 있다.
 
     # 정렬을 지정하면, 항상 일관된 순서로 조회가 된다
-    review_qs = review_qs.order_by("-id") # id 필드 역순 (내림차순)
+    # review_qs = review_qs.order_by("-id") # id 필드 역순 (내림차순)
     # review_qs = review_qs.order_by("id")  # id 필드 역순 (오름차순)
 
 
