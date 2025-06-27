@@ -1,8 +1,7 @@
-{% extends "baemin/base.html" %}
+{# 파일명 앞에 언더바(_)를 붙인 이유: 다른 템플릿에 의해서 사용될 템플릿이기에 #}
+{# 파일명에 티를 내기 위해 #}
 
-{% block content %}
-    {% include "baemin/_shop_list.html" %}
-{% comment %} <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -30,14 +29,19 @@
         
         {# HTMX 요청 여부를 인지하는 다른 방법이 있습니다만, #}
         {# 보다 직관적인 방법을 써볼 것이다#}
-        <a hx-get="?page=2&naked=1"
-            hx-trigger="click"
+    {% if page_obj.has_next %}
+        <a hx-get="?page={{ page_obj.next_page_number }}&naked=1"
+            hx-trigger="revealed"
             hx-target="this"
             hx-swap="outerHTML">
-
-            2페이지
+            
+            로딩 중 ...
         </a> 
     </ul>
+    {% else %}
+        <div class="alert alert-info">
+            끝까지 다 보셨습니다.
+        </div>
+    {% endif %}
 </body>
-</html> {% endcomment %}
-{% endblock %}
+</html>
