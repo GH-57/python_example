@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # third apps
     "debug_toolbar",
     "django_bootstrap5",
+    "django_extensions",
     # loccal apps
     "chat",
     'blog',
