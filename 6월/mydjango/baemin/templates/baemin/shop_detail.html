@@ -68,8 +68,13 @@
                 {# a태그를 바로 작성하지 않고 url을 먼저 작성하는 이유는 #}
                 {# 대개, url 작성에서 오류가 발생하는 분들이 많다. 인자 지정에 오타 등의 이유#}
                 <a href="/baemin/{{ shop.pk}}/reviews/{{review.pk}}/edit/">수정</a>
-                <a href="/baemin/{{shop.pk}}/reviews/{{review.pk}}/delete/"
+                {# HTMX는 서버에서 HTML 응답을 받아, 지정 요소에 반영을 한다. #}
+                <a hx-post="/baemin/{{shop.pk}}/reviews/{{review.pk}}/delete/"
+                    hx-confirm="Are you sure?"
+                    hx-target="closest .review-wrap" {# 대상 지정 #}
+                    hx-swap="delete" {# 반영 방법: delete (서버 응답에 상관없이 대상을 삭제) #}
                     class="btn-review-delete text-danger"
+                    style="cursor: pointer;"
                 >
                     삭제
                 </a>
@@ -83,6 +88,7 @@
     <hr />
     <p><a href="/baemin/">목록으로 돌아가기</a>
     
+    {% comment %}
     {% csrf_token %}
     <script>
         const csrf_token = document.querySelector("[name=csrfmiddlewaretoken]").value;
@@ -117,6 +123,7 @@
             });
         });
     </script>
+    {% endcomment %}
 </body>
 </html>
 {% endblock %}
