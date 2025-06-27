@@ -52,9 +52,10 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "django_extensions",
     # loccal apps
+    "accounts",
+    "baemin",
     "chat",
     'blog',
-    "baemin",
     
 ]
 
