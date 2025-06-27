@@ -1,23 +1,43 @@
 from django.contrib import messages
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView
 from .models import Shop, Review
-from blog.forms import CommentForm
-from blog.models import Comment
 from .forms import ReviewForm
+
+# 클래스를 통해서 새로운 뷰 함수를 생성
+shop_list = ListView.as_view(
+    model = Shop,
+    paginate_by = 5,
+)
+
 
 # 최신의 가게 목록 페이지를 보여줄 것이다
 # - 최신의 데이터는 DB안에 있다, 그러니 매번 DB 조회를 할 것이다
-def shop_list(request):
-    # DB에서 baemin_shop 테이블의 모든 레코드를 조회할 준비
-    # (아직 모든 데이터를 가져오지 않았다.)
-    qs = Shop.objects.all() # QuerySet
+# def shop_list(request):
+#     # DB에서 baemin_shop 테이블의 모든 레코드를 조회할 준비
+#     # (아직 모든 데이터를 가져오지 않았다.)
+#     qs = Shop.objects.all() # QuerySet
+#     # qs = qs.order_by('-id') # 매번 정렬을 지정할 수도 있지만.
 
-    return render(request,
-                template_name="baemin/shop_list.html",
-                context={
-                    "shop_list": qs,
-                })
+#     # page = 2
+#     page = int(request.GET.get("page", 1)) # 쿼리스트링 값은 기본적으로 문자열 타입
+#     paginate_by = 5 # 1페이지를 몇 개씩 끊을 것인가?
+
+#     # qs = qs[0:5] # 1페이지: 처음 5개 (리스트/문자열의 슬라이싱 문법과 동일)
+#     # qs = qs[5:10] # 2페이지
+#     # qs = qs[10:15] # 3페이지
+
+#     start_index = (page - 1) * paginate_by
+#     end_index = page * paginate_by
+#     qs = qs[start_index: end_index]
+
+
+#     return render(request,
+#                 template_name="baemin/shop_list.html",
+#                 context={
+#                     "shop_list": qs,
+#                 })
 
 
 # TODO: baemin/shop_list.html 템플릿을 만들어보기, 하얀배경도 ok. chatgpt OK

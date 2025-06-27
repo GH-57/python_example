@@ -13,6 +13,10 @@ class Shop(models.Model):
     opening_time = models.TimeField(blank=True, null=True) # 영업 시작 시간 필드 추가
     closing_time = models.TimeField(blank=True, null=True) # 영업 종료 시간 필드 추가
 
+    class Meta:
+        ordering = ["-id"]
+
+        
 # 장고의 유효성 검사 함수는 인자는 항상 1개만 받구요.
 # 그 값이 정해진 규칙에서 벗어날 때, ValidationError 예외를 발생.
 # 정해진 규칙에 부합이 될 때, Nothing to do. 그냥 함수 종료. 반환값 필요 X.
