@@ -1,0 +1,10 @@
+django~=5.2.0
+django-environ
+pyhub-llm[all]
+
+django-bootstrap5
+
+django-debug-toolbar
+django-extensions
+
+# llm 빼고는 무조건 설치하는게 좋다
