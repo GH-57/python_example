@@ -194,50 +194,42 @@
     }
 
     function calculateAccumulatedFines(week) {
-      const daysCount = 6; // 월(0)부터 토(5)까지 총 6일
+    const daysCount = 6; // 월(0)부터 토(5)까지 총 6일
 
-      const today = new Date();
-      // JavaScript의 getDay()는 일요일=0, 월요일=1, ..., 토요일=6
-      // 우리는 월요일=0, ..., 토요일=5를 사용하므로 매핑이 필요함
-      let currentRealDayOfWeek = today.getDay(); // 0(일) ~ 6(토)
+    // 아래의 `currentRealDayOfWeek` 및 `actualDayLimit` 로직은 현재 주차의 *지난* 요일까지의 벌금 계산을 제한하는 데 사용됩니다.
+    // 만약 요일과 관계없이 항상 모든 요일의 벌금을 표시하려면,
+    // 'if (week === currentRealWeek && day > actualDayLimit)' 검사를 우회하거나 제거해야 합니다.
 
-      // 실제 벌금 계산에 포함될 요일 인덱스 (0:월 ~ 5:토)
-      let actualDayLimit = -1; 
-      if (currentRealDayOfWeek === 0) { // 오늘이 일요일이면, 지난주 토요일까지의 데이터만 계산
-        actualDayLimit = 5; // 토요일 (5)까지
-      } else { // 오늘이 월요일(1) ~ 토요일(6)이면
-        actualDayLimit = currentRealDayOfWeek - 1; // getDay() 결과에서 1을 빼서 우리의 요일 인덱스로 변환
-      }
-      
-      const currentRealWeek = week; // 누적 벌금을 계산하려는 기준 주차
+    const accumulatedFines = [];
 
-      const accumulatedFines = [];
-
-      for (let i = 0; i < people.length; i++) {
+    for (let i = 0; i < people.length; i++) {
         let totalFine = 0;
         for (let day = 0; day < daysCount; day++) { // 월(0)부터 토(5)까지 반복
-          // 현재 주차(currentRealWeek)를 보고 있을 때만, 아직 지나지 않은 요일은 계산에서 제외
-          // 즉, 오늘이 수요일(2)이면 월(0), 화(1)까지의 데이터만 합산
-          // 오늘이 일요일(0)이면, 지난주 토요일(5)까지의 데이터만 합산
-          if (week === currentRealWeek && day > actualDayLimit) {
-            continue; 
-          }
+            // 현재 주차의 지나지 않은 요일에 대한 벌금 적용/조회를 허용하려면 이 블록을 제거하거나 주석 처리하세요.
+            /*
+            if (week === currentWeek && day > actualDayLimit) {
+                continue;
+            }
+            */
+            // `actualDayLimit` 및 `currentRealDayOfWeek`에 대한 원래 로직은
+            // *현재 주차*의 *현재 요일까지*의 벌금만 계산하려는 경우에 유용합니다.
+            // 하지만 요청은 토요일 이후에도 토요일 체크리스트를 *조회/적용*하는 것입니다.
 
-          const data = dailyData[week] && dailyData[week][day] ? dailyData[week][day][i] : undefined;
-          
-          if (!data) { // 해당 날짜의 데이터가 없는 경우 (초기화되지 않았거나 로드되지 않은 경우)
-            continue;
-          }
+            const data = dailyData[week] && dailyData[week][day] ? dailyData[week][day][i] : undefined;
+            
+            if (!data) { // 해당 날짜의 데이터가 없는 경우 (초기화되지 않았거나 로드되지 않은 경우)
+                continue;
+            }
 
-          const missed = [data.task1, data.task2, data.task3].filter(x => !x).length;
-          const fine = missed === 1 ? 0 : missed === 2 ? 500 : missed === 3 ? 1000 : 0;
-          totalFine += fine;
+            const missed = [data.task1, data.task2, data.task3].filter(x => !x).length;
+            const fine = missed === 1 ? 0 : missed === 2 ? 500 : missed === 3 ? 1000 : 0;
+            totalFine += fine;
         }
         accumulatedFines[i] = totalFine;
-      }
-
-      return accumulatedFines;
     }
+
+    return accumulatedFines;
+}
 
     function updateAccumulatedFines() {
       const fines = calculateAccumulatedFines(currentWeek);
