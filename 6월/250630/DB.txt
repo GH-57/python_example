@@ -1,0 +1,51 @@
+-- CREATE TABLE tset(
+--     id serial PRIMARY KEY,
+--     title VARCHAR(255) not null
+-- )
+
+
+-- id: 기본키, SERIAL(자동으로 숫자 증가, 4바이트 정수값)
+-- title: 255자 까지 입력 가능한 문자열, null 불가
+
+-- INSERT INTO test VALUES (1, 'Ali');
+-- select * from test;
+
+-- INSERT INTO test (title) VALUES ('Ali');
+
+
+-- ALTER DATABASE test2
+-- RENAME TO test;
+
+
+-- ALTER TABLE weniv_porduct
+-- RENAME to weniv_product;
+
+
+-- ALTER TABLE test
+-- ADD phone VARCHAR(11);
+
+-- select * from test
+
+-- alter table test
+-- drop column phone;
+
+-- ALTER TABLE test
+-- ALTER COLUMN name Type VARCHAR(11);
+
+-- select * from test;
+
+/* 실습 */
+
+-- CREATE TABLE weniv_porduct(
+--     id serial PRIMARY KEY,
+--     name VARCHAR(30) NULL,
+--     cost INT NULL
+-- );
+
+/*데이터 CRUD*/
+
+-- select * from weniv_product;
+
+
+
+
