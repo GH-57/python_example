@@ -1,0 +1,47 @@
+-- select 1; --print(1)
+
+-- select 1+1;
+-- select 19-20;
+-- select 3*3;
+-- select 7/2;
+
+-- --print('안녕하세요')
+-- select 'hello world';
+
+-- select 고객id  from 고객;
+
+-- select 이름 || ' ' || 연락처 || ' ' || 주소 from 고객;
+
+
+-- select 이름 || '고객님,' || 주소 || '로 배송 예정입니다. 부재시' || 연락처 || '로 연락드리겠습니다.'
+-- from 고객;
+
+
+-- select
+--     고객id,
+--     이름
+-- from 고객 as c;
+
+-- SELECT
+--     고객id,
+--     이름
+-- from 고객 as c;
+
+-- select * 
+-- from  고객
+-- order by 나이 DESC -- ASC: 오름차순, DESC: 내림차순
+-- limit 10;
+
+-- select distinct /* DISTINCT: 중복 방지*/ 가입연도, 가입월
+-- from 고객;  
+
+-- select 
+--     이름,
+--     연락처,
+--     2025 - 나이 as 출생연도
+-- from 고객 order by 나이 DESC;
+
+-- SELECT DISTINCT
+--     가입연도 as join_year,
+--     등급 as grade
+-- from 고객 limit 3;
